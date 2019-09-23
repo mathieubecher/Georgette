@@ -1,9 +1,13 @@
 #include "pch.h"
 #include "Game.h"
+#include "Hi.h"
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
 }
+Vector2 Game::Pos() {
+	return this->pos;
+} 
 
 Game * Game::Get() {
 	if (!Game::game)
@@ -11,15 +15,19 @@ Game * Game::Get() {
 	return Game::game;
 }
 
-Game::Game() : objet(1,1), hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0)
+Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 {
 	time.getElapsedMs(true);
 	Game::game = this;
 }
 
 void Game::Run() {
+	Physic2D georgette = Physic2D("georgette_idle.spr",5,5);
+	Physic2D test = Physic2D();
+	Hi hi = Hi();
+
+
 	while (1) {
-		//std::cerr << timeDraw;
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
 			time.getElapsedMs(true);
 			Update();
@@ -29,47 +37,35 @@ void Game::Run() {
 }
 
 void Game::Update() {
-	
 
-	++i;
-	if (i + 2 >= SCREEN_HEIGHT * SCREEN_WIDTH) i = 0;
-	
+	for (auto object : objects) object->Update();
 }
 
 void Game::Draw() {
-	
-	int Hx = i % SCREEN_WIDTH;
-	int Hy = i / SCREEN_WIDTH;
-	
-	int ix = (i+1) % SCREEN_WIDTH;
-	int iy = (i+1) / SCREEN_WIDTH;
 
-	int pointx = (i+2) % SCREEN_WIDTH;
-	int pointy = (i+2) / SCREEN_WIDTH;
-
-	buffer[Hy][Hx].Char.AsciiChar = 'H';
-	buffer[Hy][Hx].Attributes = 0x0E;
-	buffer[iy][ix].Char.AsciiChar = 'i';
-	buffer[iy][ix].Attributes = 0x0B;
-	buffer[pointy][pointx].Char.AsciiChar = '!';
-	buffer[pointy][pointx].Attributes = 0x0A;
-
-	this->objet.Draw();
+	for (auto object : objects) object->Draw();
 
 	COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
 	COORD dwBufferCoord = { 0, 0 };
 	SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
-	// Clear Screen
-	//system("CLS");
+
 	// Draw buffer
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
+
 	// Clear buffer
-	
+	bool test = false;
 	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
-		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y)
+		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
 			buffer[Y][X].Char.AsciiChar = ' ';
+			buffer[Y][X].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY;
+			
+		}
 	}
 	
+}
+
+void Game::AddObject(Physic2D * p) {
+	this->objects.push_back(p);
 }
 
 Game::~Game()

@@ -14,64 +14,63 @@ SpriteGenerator::~SpriteGenerator()
 {
 }
 
-int SpriteGenerator::ReadColor(char c) {
+int SpriteGenerator::ReadColorFont(char c) {
 	switch (c) {
-	case '.': {
-		return 0x66;
+	default: return 0x0000; break;
+	case '1': return 0x0007; break;
+	case '2': return 0x0000; break;
+	case 't': return 0x000d; break;
+	case 'r': return 0x0004; break;
+
 	}
-	case '0': {
-		return 0x00;
+}
+int SpriteGenerator::ReadColorBackground(char c) {
+	switch (c) {
+	default: return 0x0000; break;
+	case '1': return 0x0070; break;
+	case '2': return 0x00f0; break;
+	case 't': return 0x00d0; break;
+	case 'r': return 0x0040; break;
 	}
-	case '3': {
-		return 0xFF;
-	}
-	}
-	return 0x00;
 }
 
-/**
- * Create the CHAR_INFO array from the specified file
- * For the moment, doesn't handle animations
- *
- *
-*/
-CHAR_INFO *SpriteGenerator::CreateSprite(std::string fileName) {
+CHAR_INFO *SpriteGenerator::CreateSprite(std::string fileName, Vector2 * size) {
 	ifstream file(fileName);
-	size_t x;
-	size_t y;
-	char curr;
-	file >> x;
-	file >> y;
-	if (file.fail()) return nullptr;
-	CHAR_INFO *res = new CHAR_INFO[x*y];
-	do {
-		file >> curr;
-	} while (curr != '\n');
-	for (size_t i = 0; i < x; ++i) {
-		for (size_t j = 0; j < y; ++j) {
-			file >> curr;
-			if (file.fail()) return nullptr;
-			res[i*j].Char.AsciiChar = curr;
+	file >> size->x;
+	file >> size->y;
+	
+	CHAR_INFO *res = new CHAR_INFO[size->x*size->y];
+
+	std::string line;
+	while (std::getline(file, line, '\0')) {
+		int i = 0;
+		while (line[i] != '\n') ++i;
+		++i;
+		int x = 0;
+		int y = 0;
+
+		// char
+		while(i < line.size() && y < size->y) {
+			res[x + y * size->x].Char.UnicodeChar = line[i];
+			++i;++x;
+			if (line[i] == '\n') { ++i; x = 0; ++y; }
 		}
-		file >> curr;
+
+		x = 0; y = 0;
+		// color 
+		while (i < line.size() && y < size->y) {
+			res[x + y * size->x].Attributes = ReadColorFont(line[i]);
+			++i; ++x;
+			if (line[i] == '\n') {++i; x = 0; ++y;}
+		}
+		x = 0; y = 0;
+
+		// background
+		while (i < line.size() && y < size->y) {
+			res[x + y * size->x].Attributes = res[x + y * size->x].Attributes | ReadColorBackground(line[i]);
+			++i; ++x;
+			if (line[i] == '\n') { ++i; x = 0; ++y; }
+		}
 	}
-	for (size_t i = 0; i < x; ++i) {
-		for (size_t j = 0; j < y; ++j) {
-			file >> curr;
-			if (file.fail()) return nullptr;
-			res[i*j].Attributes = ReadColor(curr);
-		}
-		file >> curr;
-	}
-	//TODO Reste à gérer le contour en plus de la couleur de fonte
-	/*
-	for (size_t i = 0; i < x; ++i) {
-		for (size_t j = 0; j < y; ++j) {
-			file >> curr;
-			if (file.fail()) return nullptr;
-			res[i*j].Attributes = ReadColor(curr);
-		}
-		file >> curr;
-	}*/
 	return res;
 }

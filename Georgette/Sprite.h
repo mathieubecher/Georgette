@@ -3,22 +3,8 @@
 #include <stdio.h>
 #include <iostream>
 #include "NYTimer.h"
-
-
-struct Vector2
-{
-public:
-	int x;
-	int y;
-	Vector2(int x, int y) {
-		this->x = x;
-		this->y = y;
-	}
-	Vector2() {
-		this->x = 0;
-		this->y = 0;
-	}
-};	
+#include"Vector.h"
+#include"SpriteGenerator.h"
 
 class Sprite
 {
@@ -30,6 +16,9 @@ public:
 	Sprite();
 	Sprite(std::string file);
 	Sprite(int x, int y);
+	Vector2 GetSize();
+	void SetSize(int x, int y);
+	void SetPos(int x, int y);
 
 	virtual void Instantiate();
 	virtual void Draw();

@@ -4,10 +4,16 @@
 #include <iostream>
 #include "NYTimer.h"
 #include "Sprite.h"
+#include"Vector.h"
+#include"Physic2D.h"
+#include <list>
 
-#define MAXFRAME 120.0f
+#define MAXFRAME 60.0f
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 30
+
+#define WIDTH 500
+#define HEIGHT 500
 
 class Game
 {
@@ -15,9 +21,12 @@ private:
 	HANDLE hOutput;
 	CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 	NYTimer time;
-	
-	Sprite objet;
+	Vector2 pos;
 
+	
+	std::list<Physic2D*> objects;
+
+	//test affichage (à suppr)
 	static Game * game;
 
 	void Update();
@@ -30,6 +39,9 @@ private:
 
 public:
 	static Game * Get();
+	
 	CHAR_INFO * Buffer();
+	Vector2 Pos();
+	void AddObject(Physic2D * p);
 	void Run();
 };

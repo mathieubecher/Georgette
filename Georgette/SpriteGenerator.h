@@ -4,15 +4,16 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
-
+#include "Vector.h"
 class SpriteGenerator
 {
 private:
-	int ReadColor(char c);
+	static int ReadColorFont(char c);
+	static int ReadColorBackground(char c);
 
 public:
 	SpriteGenerator();
 	~SpriteGenerator();
-	CHAR_INFO *CreateSprite(std::string  fileName);
+	static CHAR_INFO *CreateSprite(std::string  fileName, Vector2 * size);
 };
 

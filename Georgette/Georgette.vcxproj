@@ -152,20 +152,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Hi.h" />
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Physic2D.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteGenerator.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Georgette.cpp" />
+    <ClCompile Include="Hi.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Physic2D.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteGenerator.cpp" />
   </ItemGroup>
