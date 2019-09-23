@@ -7,5 +7,5 @@
 
 int main()
 {
-	Game g = Game();
+	Game *g = Game::Get();
 }

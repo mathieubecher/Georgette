@@ -1,12 +1,20 @@
 #include "pch.h"
 #include "Game.h"
 
+CHAR_INFO * Game::Buffer() {
+	return *this->buffer;
+}
 
-Game::Game()
+Game * Game::Get() {
+	if (!Game::game)
+		Game::game = new Game();
+	return Game::game;
+}
+
+Game::Game() : objet(1,1), hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0)
 {
 	time.getElapsedMs(true);
-
-	Instantiate();
+	Game::game = this;
 	while(1){
 		//std::cerr << timeDraw;
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
@@ -14,15 +22,10 @@ Game::Game()
 			Update();
 			Draw();
 		}
-		
 	}
+
 }
 
-void Game::Instantiate() {
-	hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
-	time = NYTimer();
-	i = 0;
-}
 void Game::Update() {
 	
 
@@ -49,6 +52,8 @@ void Game::Draw() {
 	buffer[pointy][pointx].Char.AsciiChar = '!';
 	buffer[pointy][pointx].Attributes = 0x0A;
 
+	this->objet.Draw();
+
 	COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
 	COORD dwBufferCoord = { 0, 0 };
 	SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
@@ -64,7 +69,9 @@ void Game::Draw() {
 	}
 	
 }
+
 Game::~Game()
 {
-
 }
+
+Game * Game::game = nullptr;
