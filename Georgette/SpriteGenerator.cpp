@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "SpriteGenerator.h"
-#include <string>
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
+
 
 
 using namespace std;
@@ -40,8 +37,8 @@ int SpriteGenerator::ReadColor(char c) {
 */
 CHAR_INFO *SpriteGenerator::CreateSprite(std::string fileName) {
 	ifstream file(fileName);
-	int x;
-	int y;
+	size_t x;
+	size_t y;
 	char curr;
 	file >> x;
 	file >> y;

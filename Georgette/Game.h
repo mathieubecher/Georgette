@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <iostream>
 #include "NYTimer.h"
-#include "Physics2D.h"
+#include "Sprite.h"
 
-#define MAXFRAME 30.0f
+#define MAXFRAME 120.0f
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 30
 
@@ -16,7 +16,7 @@ private:
 	CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 	NYTimer time;
 	
-	Physics2D objet;
+	Sprite objet;
 
 	static Game * game;
 
@@ -31,4 +31,5 @@ private:
 public:
 	static Game * Get();
 	CHAR_INFO * Buffer();
+	void Run();
 };

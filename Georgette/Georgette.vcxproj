@@ -154,7 +154,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Physics2D.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -165,7 +166,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Physics2D.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

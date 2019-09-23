@@ -1,5 +1,10 @@
 #pragma once
 #include "Windows.h"
+#include <string>
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+
 class SpriteGenerator
 {
 private:
@@ -8,6 +13,6 @@ private:
 public:
 	SpriteGenerator();
 	~SpriteGenerator();
-	CHAR_INFO *CreateSprite(std::string fileName);
+	CHAR_INFO *CreateSprite(std::string  fileName);
 };
 

@@ -20,24 +20,22 @@ public:
 	}
 };	
 
-class Physics2D
+class Sprite
 {
 private:
 	Vector2 pos;
 	Vector2 size;
 	CHAR_INFO * sprite;
 public:
-	Physics2D();
-	Physics2D(std::string file);
-	Physics2D(Vector2 size);
-	Physics2D(int x, int y);
+	Sprite();
+	Sprite(std::string file);
+	Sprite(int x, int y);
 
 	virtual void Instantiate();
-	virtual void Update();
 	virtual void Draw();
 
 	CHAR_INFO GetCase(int x, int y);
 
-	~Physics2D();
+	~Sprite();
 };
 

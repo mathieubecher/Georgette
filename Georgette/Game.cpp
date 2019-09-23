@@ -15,7 +15,10 @@ Game::Game() : objet(1,1), hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0
 {
 	time.getElapsedMs(true);
 	Game::game = this;
-	while(1){
+}
+
+void Game::Run() {
+	while (1) {
 		//std::cerr << timeDraw;
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
 			time.getElapsedMs(true);
@@ -23,7 +26,6 @@ Game::Game() : objet(1,1), hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0
 			Draw();
 		}
 	}
-
 }
 
 void Game::Update() {
@@ -58,7 +60,7 @@ void Game::Draw() {
 	COORD dwBufferCoord = { 0, 0 };
 	SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
 	// Clear Screen
-	system("CLS");
+	//system("CLS");
 	// Draw buffer
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 	// Clear buffer

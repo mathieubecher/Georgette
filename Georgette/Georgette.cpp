@@ -8,4 +8,5 @@
 int main()
 {
 	Game *g = Game::Get();
+	g->Run();
 }
