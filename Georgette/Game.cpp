@@ -4,21 +4,35 @@
 
 Game::Game()
 {
-	hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	time.getElapsedMs(true);
 
-	i = 0;
+	Instantiate();
 	while(1){
-		Update();
-		Draw();
+		//std::cerr << timeDraw;
+		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
+			time.getElapsedMs(true);
+			Update();
+			Draw();
+		}
+		
 	}
 }
 
+void Game::Instantiate() {
+	hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	time = NYTimer();
+	i = 0;
+}
 void Game::Update() {
+	
+
 	++i;
 	if (i + 2 >= SCREEN_HEIGHT * SCREEN_WIDTH) i = 0;
+	
 }
 
 void Game::Draw() {
+	
 	int Hx = i % SCREEN_WIDTH;
 	int Hy = i / SCREEN_WIDTH;
 	
@@ -43,10 +57,12 @@ void Game::Draw() {
 	// Draw buffer
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 	// Clear buffer
+	
 	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y)
 			buffer[Y][X].Char.AsciiChar = ' ';
 	}
+	
 }
 Game::~Game()
 {
