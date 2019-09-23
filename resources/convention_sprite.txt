@@ -1,0 +1,9 @@
+0-3 : niveaux de gris (0: noir, 9: blanc)
+r : écriture rouge
+t : transparent
+
+
+x y
+sprite(sprite)...
+couleur texte(couleur texte)...
+couleur fond(couleur texte)...
