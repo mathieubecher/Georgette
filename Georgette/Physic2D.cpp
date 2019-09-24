@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Physic2D.h"
 #include "Game.h"
-
+#include <math.h>
 int Physic2D::ID = 0;
 
-Physic2D::Physic2D() :id(ID++), sprite(), pos(6,10), size(1,1)
+Physic2D::Physic2D() :id(ID++), sprite(), pos(6,5), size(1,1)
 {
 	Game *g = Game::Get();
 	g->AddObject(this);
@@ -13,7 +13,6 @@ Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : id(I
 {
 	Game *g = Game::Get();
 	g->AddObject(this);
-
 }
 
 
@@ -31,7 +30,7 @@ Vector2f Physic2D::GetPos() {
 
 
 void Physic2D::Draw() {
-	this->sprite.Draw(Vector2(pos.x,pos.y));
+	this->sprite.Draw(Vector2(floor(pos.x),floor(pos.y)));
 }
 
 Physic2D::~Physic2D()

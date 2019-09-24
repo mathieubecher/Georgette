@@ -24,8 +24,8 @@ void Rigidbody::Update() {
 			//test top
 			if (velocity < 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y), Vector2(this->size.x, 1)))
 			{
-			pos.y = ceil(pos.y);
-			velocity = -velocity;
+			pos.y = floor(pos.y-velocity) ;
+			velocity = 0.2f;
 			}
 		}
 	}
