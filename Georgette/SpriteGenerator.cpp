@@ -33,23 +33,26 @@ int SpriteGenerator::ReadColorBackground(char c) {
 	}
 }
 
-CHAR_INFO *SpriteGenerator::CreateSprite(std::string fileName, Vector2 * size, Vector2 *pos = nullptr) {
-	ifstream file(fileName);
-	file >> size->x;
-	file >> size->y;
+CHAR_INFO *SpriteGenerator::CreateSprite(std::string fileName, Vector2 * size, Vector2 *pos) {
+	ifstream *file = new ifstream(fileName);
+	if (!file->is_open()) {
+		return nullptr;
+	}
+	*file >> size->x;
+	*file >> size->y;
 	if (pos) {
-		file >> pos->x;
-		file >> pos->y;
+		*file >> pos->x;
+		*file >> pos->y;
 	} else {
 		int trash = 0;
-		file >> trash;
-		file >> trash;
+		*file >> trash;
+		*file >> trash;
 	}
 	
 	CHAR_INFO *res = new CHAR_INFO[size->x*size->y];
 
 	std::string line;
-	while (std::getline(file, line, '\0')) {
+	while (std::getline(*file, line, '\0')) {
 		int i = 0;
 		while (line[i] != '\n') ++i;
 		++i;
@@ -79,5 +82,7 @@ CHAR_INFO *SpriteGenerator::CreateSprite(std::string fileName, Vector2 * size, V
 			if (line[i] == '\n') { ++i; x = 0; ++y; }
 		}
 	}
+	file->close();
+	delete(file);
 	return res;
 }

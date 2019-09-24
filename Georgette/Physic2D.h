@@ -17,5 +17,6 @@ public:
 	virtual void Update();
 	virtual void Draw();
 	Vector2f GetPos();
+	Sprite *GetSprite();
 };
 

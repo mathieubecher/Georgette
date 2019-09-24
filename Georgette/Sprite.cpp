@@ -27,6 +27,10 @@ Sprite::Sprite(CHAR_INFO *sprite, Vector2 size) {
 	this->pos = Vector2(0,0);
 }
 
+CHAR_INFO *Sprite::GetSprite() {
+	return sprite;
+}
+
 Sprite::Sprite(int x,int y)
 {
 	this->pos.x = 0;

@@ -42,3 +42,8 @@ void Physic2D::Draw() {
 Physic2D::~Physic2D()
 {
 }
+
+
+Sprite *Physic2D::GetSprite() {
+	return &sprite;
+}

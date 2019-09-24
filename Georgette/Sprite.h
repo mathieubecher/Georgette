@@ -23,7 +23,7 @@ public:
 
 	virtual void Instantiate();
 	virtual void Draw(Vector2 pos);
-
+	CHAR_INFO *GetSprite();
 	CHAR_INFO GetCase(int x, int y);
 
 	~Sprite();
