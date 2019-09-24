@@ -78,7 +78,7 @@ void Game::Draw() {
 	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
 			buffer[Y][X].Char.AsciiChar = ' ';
-			buffer[Y][X].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY;
+			buffer[Y][X].Attributes = 0x00f0;
 		}
 	}
 }

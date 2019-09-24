@@ -72,7 +72,15 @@ void Sprite::Draw(Vector2 pos) {
 				CHAR_INFO poscase = this->GetCase(x,y);
 				if (poscase.Char.AsciiChar != ' ' || (poscase.Attributes & 0x00f0) != 0x00d0) {
 					buffer[posx + posy * SCREEN_WIDTH].Char.UnicodeChar = poscase.Char.UnicodeChar;
+
 					if ((poscase.Attributes & 0x00f0) != 0x00d0) buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes;
+					else
+					{
+						int bg = (buffer[posx + posy * SCREEN_WIDTH].Attributes & 0x00f0);
+						int color = (poscase.Attributes & 0x000f);
+						int bgcolor = bg | color;
+						buffer[posx + posy * SCREEN_WIDTH].Attributes = bgcolor ;
+					}
 				}
 			}
 		}
