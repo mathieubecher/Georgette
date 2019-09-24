@@ -8,5 +8,5 @@ public:
 	~MapGenerator();
 	Map *GenerateChunk(Vector2 pos);
 	Map *FindChunk(Vector2 pos);
+	Map *GenerateFirstChunk();
 };
-

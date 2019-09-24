@@ -25,6 +25,9 @@ bool Physic2D::Collider(Vector2f pos, Vector2 size) {
 	return false;
 }
 
+Vector2f Physic2D::GetPos() {
+	return pos;
+}
 
 
 void Physic2D::Draw() {

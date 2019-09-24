@@ -44,7 +44,7 @@ private:
 
 public:
 	static Game * Get();
-	static std::list<Map*> GetChunks();
+	static std::list<Map*> *GetChunks();
 	
 	CHAR_INFO * Buffer();
 	Vector2 Pos();

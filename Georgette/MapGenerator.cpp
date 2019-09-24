@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "MapGenerator.h"
 #include "Game.h"
-
-Vector2 const MapGenerator::SIZE(80,40);
+#include <list>
+#include <math.h>
 
 MapGenerator::MapGenerator()
 {
@@ -13,6 +13,11 @@ MapGenerator::~MapGenerator()
 {
 }
 
+Map *MapGenerator::GenerateFirstChunk() {
+	//Map first = Map();
+	return nullptr;
+}
+
 Map *MapGenerator::GenerateChunk(Vector2 pos) {
 
 	return nullptr;
@@ -20,9 +25,11 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 
 
 Map *MapGenerator::FindChunk(Vector2 pos) {
-	Game::GetChunks();
-
-
-
+	std::list<Map*> *chunks = Game::GetChunks();
+	for (Map* i : *chunks) {
+		if (i->GetPos() == pos) {
+			return i;
+		}
+	}
 	return nullptr;
 }

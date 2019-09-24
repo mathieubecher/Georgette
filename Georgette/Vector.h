@@ -1,5 +1,7 @@
 #pragma once
 
+struct Vector2f;
+
 struct Vector2
 {
 public:
@@ -14,6 +16,8 @@ public:
 		this->x = 0;
 		this->y = 0;
 	}
+	bool operator==(const Vector2& other) const;
+	bool operator==(const Vector2f& other) const;
 };
 
 struct Vector2f
@@ -30,4 +34,5 @@ public:
 		this->x = 0;
 		this->y = 0;
 	}
+	bool operator==(const Vector2& other) const;
 };

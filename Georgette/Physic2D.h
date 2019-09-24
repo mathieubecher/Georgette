@@ -15,5 +15,6 @@ public:
 	virtual bool Collider(Vector2f pos, Vector2 size);
 	virtual void Update();
 	virtual void Draw();
+	Vector2f GetPos();
 };
 
