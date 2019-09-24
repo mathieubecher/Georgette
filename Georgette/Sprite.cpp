@@ -5,6 +5,8 @@
 
 Sprite::Sprite()
 {
+	this->pos.x = 0;
+	this->pos.y = 0;
 	this->size.x = 1;
 	this->size.y = 1;
 	Instantiate();
@@ -14,10 +16,14 @@ Sprite::Sprite()
 }
 
 Sprite::Sprite(std::string file) {
-	this->sprite = SpriteGenerator::CreateSprite(file,&this->size);
+	this->pos.x = 0;
+	this->pos.y = 0;
+	this->sprite = SpriteGenerator::CreateSprite(file,&this->size,&this->pos);
 }
 Sprite::Sprite(int x,int y)
 {
+	this->pos.x = 0;
+	this->pos.y = 0;
 	this->size.x = x;
 	this->size.y = y;
 	Instantiate();
@@ -49,8 +55,8 @@ void Sprite::Draw(Vector2 pos) {
 		for (int y = 0; y < this->size.y; ++y) {
 
 
-			int posx = pos.x + x - g->Pos().x;
-			int posy = pos.y + y - g->Pos().y;
+			int posx = pos.x + this->pos.x + x - g->Pos().x;
+			int posy = pos.y  + this->pos.y + y - g->Pos().y;
 
 			if (posx >= 0 && posx < SCREEN_WIDTH && posy >= 0 && posy < SCREEN_HEIGHT){
 				CHAR_INFO poscase = this->GetCase(x,y);

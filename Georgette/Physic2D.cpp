@@ -7,7 +7,7 @@ Physic2D::Physic2D() :sprite(), pos(0,0), size(1,1)
 	Game *g = Game::Get();
 	g->AddObject(this);
 }
-Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : sprite("D:/EspaceBecher/Realisations/enjmin/CppASCII/Georgette/resources/sprites/georgette/" + file), pos((float)x, (float)y),size((float)width,(float)height)
+Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : sprite("../resources/sprites/georgette/" + file), pos((float)x, (float)y),size((float)width,(float)height)
 {
 	Game *g = Game::Get();
 	g->AddObject(this);

@@ -22,7 +22,7 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 }
 
 void Game::Run() {
-	Physic2D georgette = Physic2D("georgette_idle.spr",5,5,8,4);
+	Physic2D georgette = Physic2D("georgette_idle.spr",5,5,5,3);
 	Physic2D test = Physic2D();
 	Hi hi = Hi();
 
