@@ -48,5 +48,7 @@ public:
 	CHAR_INFO * Buffer();
 	Vector2 Pos();
 	void AddObject(Physic2D * p);
+	void AddChunk(Map * m);
+	void AddCollidable(Collidable * c);
 	void Run();
 };

@@ -69,7 +69,12 @@ void Game::Draw() {
 void Game::AddObject(Physic2D * p) {
 	this->objects.push_back(p);
 }
-
+void Game::AddChunk(Map * m) {
+	this->chunks.push_back(m);
+}
+void Game::AddCollidable(Collidable * c) {
+	this->collidables.push_back(c);
+}
 Game::~Game()
 {
 }
