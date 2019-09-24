@@ -62,7 +62,7 @@ void Sprite::Draw(Vector2 pos) {
 				CHAR_INFO poscase = this->GetCase(x,y);
 				if (poscase.Char.AsciiChar != ' ') {
 					buffer[posx + posy * SCREEN_WIDTH].Char.UnicodeChar = poscase.Char.UnicodeChar;
-					buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes;
+					if((poscase.Attributes & 0x00f0) != 0x00d0) buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes & 0x00f0;
 				}
 			}
 		}
@@ -70,4 +70,13 @@ void Sprite::Draw(Vector2 pos) {
 }
 CHAR_INFO Sprite::GetCase(int x, int y) {
 	return this->sprite[x + y * this->size.x];
+}
+
+void Sprite::TestSpriteSize(Vector2 const &sizehitbox) {
+	for (int x = -this->pos.x; x < -this->pos.x + sizehitbox.x; ++x) {
+		for (int y = -this->pos.y; y < -this->pos.y + sizehitbox.y; ++y) {
+			this->sprite[x + y * this->size.x].Attributes = 0x000f;
+			this->sprite[x + y * this->size.x].Char.UnicodeChar = '.';
+		}
+	}
 }

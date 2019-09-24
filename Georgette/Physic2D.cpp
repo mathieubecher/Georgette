@@ -16,8 +16,14 @@ Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : spri
 
 
 void Physic2D::Update() {
-	//sprite.SetSize(size.x, size.y);
+	//sprite.TestSpriteSize(this->size);
 }
+
+bool Physic2D::Collider(Vector2f pos, Vector2 size) {
+	return false;
+}
+
+
 
 void Physic2D::Draw() {
 	this->sprite.Draw(Vector2(pos.x,pos.y));
