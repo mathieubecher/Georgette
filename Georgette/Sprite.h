@@ -17,6 +17,7 @@ public:
 	Sprite();
 	Sprite(std::string file);
 	Sprite(int x, int y);
+	Sprite(CHAR_INFO *sprite, Vector2 size);
 	Vector2 GetSize();
 	void SetSize(int x, int y);
 

@@ -14,7 +14,15 @@ MapGenerator::~MapGenerator()
 }
 
 Map *MapGenerator::GenerateFirstChunk() {
-	//Map first = Map();
+	CHAR_INFO sprite[SIZEW*SIZEH];
+
+
+
+
+
+
+
+	Map first = Map(sprite, 0, 0);
 	return nullptr;
 }
 

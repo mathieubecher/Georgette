@@ -13,7 +13,12 @@ Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : id(I
 {
 	Game *g = Game::Get();
 	g->AddObject(this);
+}
 
+Physic2D::Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos) : id(ID++), sprite(sprite, size), pos(pos), size(size)
+{
+	Game *g = Game::Get();
+	g->AddObject(this);
 }
 
 

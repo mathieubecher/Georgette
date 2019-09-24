@@ -62,7 +62,6 @@ void Game::Draw() {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
 			buffer[Y][X].Char.AsciiChar = ' ';
 			buffer[Y][X].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY;
-			
 		}
 	}
 }
