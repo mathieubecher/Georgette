@@ -10,6 +10,7 @@ class Sprite
 {
 private:
 	Vector2 size;
+	Vector2 pos;
 	CHAR_INFO * sprite;
 public:
 	Sprite();
