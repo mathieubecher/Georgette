@@ -7,3 +7,7 @@ bool Collidable::Collider(Vector2f pos, Vector2 size) {
 		pos.y < this->pos.y + this->size.y &&
 		size.y + pos.y > this->pos.y;
 }
+Collidable::Collidable(std::string file, int x, int y, int width, int height) : Physic2D(file, x, y, width, height)
+{
+
+}
