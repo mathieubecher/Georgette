@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include"Vector.h"
 #include"Physic2D.h"
+#include "Collidable.h"
+#include "Map.h"
 
 
 #define MAXFRAME 60.0f
@@ -27,6 +29,8 @@ private:
 
 	
 	std::list<Physic2D*> objects;
+	std::list<Map*> chunks;
+	std::list<Collidable*> collidables;
 
 	static Game * game;
 

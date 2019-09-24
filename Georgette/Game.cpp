@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Game.h"
 #include "Hi.h"
-#include "Map.h"
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
