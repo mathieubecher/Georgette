@@ -27,7 +27,6 @@
     <ClInclude Include="SpriteGenerator.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
     <ClInclude Include="Sprite.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -40,8 +39,6 @@
     <ClInclude Include="Hi.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-=======
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -56,7 +53,6 @@
     <ClCompile Include="SpriteGenerator.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="Sprite.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -66,7 +62,5 @@
     <ClCompile Include="Hi.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-=======
->>>>>>> Stashed changes
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -23,7 +23,7 @@
     <ProjectGuid>{790979D5-3900-4E37-8E27-2144310FF757}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Georgette</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -155,14 +155,10 @@
     <ClInclude Include="Hi.h" />
     <ClInclude Include="NYTimer.h" />
     <ClInclude Include="pch.h" />
-<<<<<<< Updated upstream
     <ClInclude Include="Physic2D.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteGenerator.h" />
     <ClInclude Include="Vector.h" />
-=======
-    <ClInclude Include="SpriteGenerator.h" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -174,11 +170,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="Physic2D.cpp" />
     <ClCompile Include="Sprite.cpp" />
-=======
->>>>>>> Stashed changes
     <ClCompile Include="SpriteGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
