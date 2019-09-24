@@ -11,19 +11,16 @@ Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : spri
 {
 	Game *g = Game::Get();
 	g->AddObject(this);
-	size.x = (float)sprite.GetSize().x;
-	size.y = (float)sprite.GetSize().y;
 
 }
 
 
 void Physic2D::Update() {
-	sprite.SetPos(pos.x, pos.y);
-	sprite.SetSize(size.x, size.y);
+	//sprite.SetSize(size.x, size.y);
 }
 
 void Physic2D::Draw() {
-	this->sprite.Draw();
+	this->sprite.Draw(Vector2(pos.x,pos.y));
 }
 
 Physic2D::~Physic2D()

@@ -1,12 +1,14 @@
 #pragma once
-#include "Windows.h"
+#include <Windows.h>
 #include <stdio.h>
 #include <iostream>
+#include <list>
+
 #include "NYTimer.h"
 #include "Sprite.h"
 #include"Vector.h"
 #include"Physic2D.h"
-#include <list>
+
 
 #define MAXFRAME 60.0f
 #define SCREEN_WIDTH 120

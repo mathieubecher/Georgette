@@ -9,7 +9,6 @@
 class Sprite
 {
 private:
-	Vector2 pos;
 	Vector2 size;
 	CHAR_INFO * sprite;
 public:
@@ -18,10 +17,9 @@ public:
 	Sprite(int x, int y);
 	Vector2 GetSize();
 	void SetSize(int x, int y);
-	void SetPos(int x, int y);
 
 	virtual void Instantiate();
-	virtual void Draw();
+	virtual void Draw(Vector2 pos);
 
 	CHAR_INFO GetCase(int x, int y);
 
