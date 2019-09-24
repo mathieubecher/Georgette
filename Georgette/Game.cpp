@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Game.h"
 #include "Hi.h"
+#include "Map.h"
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
@@ -22,7 +23,8 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 }
 
 void Game::Run() {
-	Physic2D georgette = Physic2D("georgette_idle.spr",5,5,5,3);
+	Map map = Map("tile/map.spr",0,0,0,0);
+	Physic2D georgette = Physic2D("georgette/georgette_idle.spr",5,5,5,3);
 	Physic2D test = Physic2D();
 	Hi hi = Hi();
 

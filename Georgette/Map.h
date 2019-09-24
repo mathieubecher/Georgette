@@ -1,9 +1,7 @@
 #pragma once
 #include "Physic2D.h"
-class Map: Physic2D
+class Map: public Physic2D
 {
 public:
-	Map();
-	~Map();
 };
 
