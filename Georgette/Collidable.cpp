@@ -13,5 +13,6 @@ Collidable::Collidable(std::string file, int x, int y, int width, int height) : 
 	g->AddCollidable(this);
 }
 Collidable::Collidable() : Physic2D() {
-	pos.y = 4;
+	Game *g = Game::Get();
+	g->AddCollidable(this);
 }

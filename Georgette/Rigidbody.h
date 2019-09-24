@@ -6,7 +6,7 @@
 
 class Rigidbody : public Collidable
 {
-private :
+protected :
 	float velocity;
 	bool onfloor;
 public:

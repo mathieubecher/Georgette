@@ -12,6 +12,10 @@ CHAR_INFO * Game::Buffer() {
 Vector2 Game::Pos() {
 	return this->pos;
 } 
+void Game::SetPos(int x, int y) {
+	pos.x = x;
+	pos.y = y;
+}
 
 Game * Game::Get() {
 	if (!Game::game)
@@ -47,7 +51,9 @@ void Game::Update() {
 
 void Game::Draw() {
 
-	for (auto object : objects) object->Draw();
+	for (auto chunk : chunks) chunk->Draw();
+	for (auto collidable : collidables) collidable->Draw();
+
 
 	COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
 	COORD dwBufferCoord = { 0, 0 };
