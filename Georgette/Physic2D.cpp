@@ -2,12 +2,14 @@
 #include "Physic2D.h"
 #include "Game.h"
 
-Physic2D::Physic2D() :sprite(), pos(0,0), size(1,1)
+int Physic2D::ID = 0;
+
+Physic2D::Physic2D() :id(ID++), sprite(), pos(0,0), size(1,1)
 {
 	Game *g = Game::Get();
 	g->AddObject(this);
 }
-Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : sprite("../resources/sprites/" + file), pos((float)x, (float)y),size((float)width,(float)height)
+Physic2D::Physic2D(std::string file, int x, int y, int width, int height) : id(ID++), sprite("../resources/sprites/" + file), pos((float)x, (float)y),size((float)width,(float)height)
 {
 	Game *g = Game::Get();
 	g->AddObject(this);

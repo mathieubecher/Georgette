@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Hi.h"
 #include "Map.h"
+#include "Rigidbody.h"
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
@@ -24,7 +25,7 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 
 void Game::Run() {
 	Map map = Map("tile/map.spr",0,0,0,0);
-	Physic2D georgette = Physic2D("georgette/georgette_idle.spr",5,5,5,3);
+	Rigidbody georgette = Rigidbody("georgette/georgette_idle.spr",5.9f,5,5,3);
 	Physic2D test = Physic2D();
 	Hi hi = Hi();
 
@@ -63,7 +64,6 @@ void Game::Draw() {
 			
 		}
 	}
-	
 }
 
 void Game::AddObject(Physic2D * p) {

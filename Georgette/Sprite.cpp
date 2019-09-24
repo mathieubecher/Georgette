@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Sprite.h"
 #include "Game.h"
-
+#include <math.h>
 
 Sprite::Sprite()
 {
@@ -55,8 +55,8 @@ void Sprite::Draw(Vector2 pos) {
 		for (int y = 0; y < this->size.y; ++y) {
 
 
-			int posx = pos.x + this->pos.x + x - g->Pos().x;
-			int posy = pos.y  + this->pos.y + y - g->Pos().y;
+			int posx = floor(pos.x) + this->pos.x + x - g->Pos().x;
+			int posy = floor(pos.y)  + this->pos.y + y - g->Pos().y;
 
 			if (posx >= 0 && posx < SCREEN_WIDTH && posy >= 0 && posy < SCREEN_HEIGHT){
 				CHAR_INFO poscase = this->GetCase(x,y);
