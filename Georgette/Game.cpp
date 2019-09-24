@@ -5,6 +5,9 @@
 #include "Rigidbody.h"
 #include "Collidable.h"
 #include "Devil.h"
+#include "MapGenerator.h"
+#include <stdlib.h>
+#include <time.h>
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
@@ -30,7 +33,9 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 }
 
 void Game::Run() {
+	srand(time.getElapsedMs());
 	Map map = Map("tile/map.spr",0,0,0,0);
+	//Map *map = MapGenerator::GenerateFirstChunk();
 	Devil georgette = Devil(6,5);
 	Collidable test = Collidable();
 
@@ -41,6 +46,12 @@ void Game::Run() {
 			Draw();
 			time.getElapsedMs(true);
 		}
+	}
+}
+Game::~Game()
+{
+	for (auto i : chunks) {
+		delete(i->GetSprite()->GetSprite());
 	}
 }
 
@@ -68,7 +79,6 @@ void Game::Draw() {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
 			buffer[Y][X].Char.AsciiChar = ' ';
 			buffer[Y][X].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED | BACKGROUND_INTENSITY;
-			
 		}
 	}
 }
@@ -91,9 +101,6 @@ void Game::AddChunk(Map * m) {
 }
 void Game::AddCollidable(Collidable * c) {
 	this->collidables.push_back(c);
-}
-Game::~Game()
-{
 }
 
 Game * Game::game = nullptr;

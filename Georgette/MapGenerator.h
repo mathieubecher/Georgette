@@ -6,7 +6,8 @@ public:
 	static Vector2 const SIZE;
 	MapGenerator();
 	~MapGenerator();
-	Map *GenerateChunk(Vector2 pos);
-	Map *FindChunk(Vector2 pos);
-	Map *GenerateFirstChunk();
+	static Map *GenerateChunk(Vector2 pos);
+	static Map *FindChunk(Vector2 pos);
+	static Map *GenerateFirstChunk();
+	static void PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y, std::string fileName);
 };

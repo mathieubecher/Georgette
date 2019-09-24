@@ -20,6 +20,17 @@ Sprite::Sprite(std::string file) {
 	this->pos.y = 0;
 	this->sprite = SpriteGenerator::CreateSprite(file,&this->size,&this->pos);
 }
+
+Sprite::Sprite(CHAR_INFO *sprite, Vector2 size) {
+	this->sprite = sprite;
+	this->size = size;
+	this->pos = Vector2(0,0);
+}
+
+CHAR_INFO *Sprite::GetSprite() {
+	return sprite;
+}
+
 Sprite::Sprite(int x,int y)
 {
 	this->pos.x = 0;
@@ -27,7 +38,6 @@ Sprite::Sprite(int x,int y)
 	this->size.x = x;
 	this->size.y = y;
 	Instantiate();
-
 }
 
 void Sprite::SetSize(int x, int y) {
