@@ -4,6 +4,7 @@
 
 
 void Hi::Update() {
+	// Save the git
 	++pos.x;
 	if (pos.x > SCREEN_WIDTH) {
 		pos.x = 0;
