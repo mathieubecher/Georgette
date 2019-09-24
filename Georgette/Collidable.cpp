@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Collidable.h"
-
+#include "Game.h"
 bool Collidable::Collider(Vector2f pos, Vector2 size) {
 	return pos.x < this->pos.x + this->size.x &&
 		pos.x + size.x > this->pos.x &&
@@ -9,5 +9,9 @@ bool Collidable::Collider(Vector2f pos, Vector2 size) {
 }
 Collidable::Collidable(std::string file, int x, int y, int width, int height) : Physic2D(file, x, y, width, height)
 {
-
+	Game *g = Game::Get();
+	g->AddCollidable(this);
+}
+Collidable::Collidable() : Physic2D() {
+	pos.y = 4;
 }

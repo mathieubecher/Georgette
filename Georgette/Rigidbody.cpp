@@ -1,12 +1,39 @@
 #include "pch.h"
 #include "Rigidbody.h"
+#include "Game.h"
 
 
+Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Collidable(file, x, y, width, height),onfloor(false)
+{
+
+}
 void Rigidbody::Update() {
+
+	velocity += GRAVITY;
+	pos.y += velocity;
+	for (auto object : Game::GetObjects()) {
+		// test bottom
+		if (velocity > 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y + this->size.y - 1), Vector2(this->size.x, 1)))
+		{
+			pos.y = floor(pos.y);
+			velocity = 0;
+			onfloor = true;
+		}
+		else {
+			onfloor = false;
+			//test top
+			if (velocity < 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y), Vector2(this->size.x, 1)))
+			{
+			pos.y = ceil(pos.y);
+			velocity = -velocity;
+			}
+		}
+	}
+
+	pos.y += velocity;
 
 	Collidable::Update();
 }
-Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Collidable(file, x, y, width, height)
-{
-
+void Rigidbody::SetVelocity(float v) {
+	velocity = v;
 }

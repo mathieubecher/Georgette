@@ -3,6 +3,8 @@
 #include "Hi.h"
 #include "Map.h"
 #include "Rigidbody.h"
+#include "Collidable.h"
+#include "Devil.h"
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
@@ -25,16 +27,15 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 
 void Game::Run() {
 	Map map = Map("tile/map.spr",0,0,0,0);
-	Rigidbody georgette = Rigidbody("georgette/georgette_idle.spr",5.9f,5,5,3);
-	Physic2D test = Physic2D();
-	Hi hi = Hi();
+	Devil georgette = Devil(6,5);
+	Collidable test = Collidable();
 
 
 	while (1) {
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
-			time.getElapsedMs(true);
 			Update();
 			Draw();
+			time.getElapsedMs(true);
 		}
 	}
 }
@@ -69,11 +70,22 @@ void Game::Draw() {
 std::list<Map*> *Game::GetChunks() {
 	return &Get()->chunks;
 }
+std::list<Collidable*> Game::GetCollidables() {
+	return Get()->collidables;
+}
+std::list<Physic2D*> Game::GetObjects() {
+	return Get()->objects;
+}
 
 void Game::AddObject(Physic2D * p) {
 	this->objects.push_back(p);
 }
-
+void Game::AddChunk(Map * m) {
+	this->chunks.push_back(m);
+}
+void Game::AddCollidable(Collidable * c) {
+	this->collidables.push_back(c);
+}
 Game::~Game()
 {
 }
