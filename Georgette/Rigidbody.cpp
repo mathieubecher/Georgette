@@ -3,18 +3,35 @@
 #include "Game.h"
 
 
-Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Collidable(file, x, y, width, height)
+Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Collidable(file, x, y, width, height),onfloor(false)
 {
 
 }
 void Rigidbody::Update() {
 
 	velocity += GRAVITY;
+	pos.y += velocity;
 	for (auto object : Game::GetObjects()) {
-		if (object->id != this->id && object->Collider(pos, size)) velocity = 0;
+		// test bottom
+		if (velocity > 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y + this->size.y - 1), Vector2(this->size.x, 1)))
+		{
+			pos.y = floor(pos.y);
+			velocity = 0;
+			onfloor = true;
+		}
+		else {
+			onfloor = false;
+			//test top
+			if (velocity < 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y), Vector2(this->size.x, 1)))
+			{
+			pos.y = ceil(pos.y);
+			velocity = -velocity;
+			}
+		}
 	}
 
 	pos.y += velocity;
+
 	Collidable::Update();
 }
 void Rigidbody::SetVelocity(float v) {

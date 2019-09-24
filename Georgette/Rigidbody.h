@@ -8,6 +8,7 @@ class Rigidbody : public Collidable
 {
 private :
 	float velocity;
+	bool onfloor;
 public:
 	void Update();
 	void SetVelocity(float v);
