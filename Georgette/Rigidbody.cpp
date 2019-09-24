@@ -11,6 +11,7 @@ void Rigidbody::Update() {
 
 	velocity += GRAVITY;
 	pos.y += velocity;
+	onfloor = false;
 	for (auto object : Game::GetObjects()) {
 		// test bottom
 		if (velocity > 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y + this->size.y - 1), Vector2(this->size.x, 1)))
@@ -20,7 +21,6 @@ void Rigidbody::Update() {
 			onfloor = true;
 		}
 		else {
-			onfloor = false;
 			//test top
 			if (velocity < 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y), Vector2(this->size.x, 1)))
 			{
