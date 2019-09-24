@@ -28,7 +28,6 @@ private:
 	
 	std::list<Physic2D*> objects;
 
-	//test affichage (à suppr)
 	static Game * game;
 
 	void Update();
