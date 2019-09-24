@@ -66,6 +66,10 @@ void Game::Draw() {
 	}
 }
 
+std::list<Map*> Game::GetChunks() {
+	return Get()->chunks;
+}
+
 void Game::AddObject(Physic2D * p) {
 	this->objects.push_back(p);
 }
