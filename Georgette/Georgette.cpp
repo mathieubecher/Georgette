@@ -4,9 +4,15 @@
 #include "pch.h"
 #include "Game.h"
 #include <iostream>
+#include <windows.h>
+#include <stdio.h>
+
+#include <thread>   
 
 int main()
 {
 	Game *g = Game::Get();
 	g->Run();
+	return 0;
 }
+
