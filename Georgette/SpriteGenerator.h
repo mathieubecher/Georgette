@@ -14,6 +14,6 @@ private:
 public:
 	SpriteGenerator();
 	~SpriteGenerator();
-	static CHAR_INFO *CreateSprite(std::string  fileName, Vector2 * size);
+	static CHAR_INFO *CreateSprite(std::string  fileName, Vector2 *size, Vector2 *pos);
 };
 

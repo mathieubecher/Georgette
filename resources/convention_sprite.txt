@@ -1,4 +1,4 @@
-0-3 : niveaux de gris (0: noir, 9: blanc)
+0-2 : niveaux de gris (0: noir, 9: blanc)
 r : écriture rouge
 t : transparent
 
