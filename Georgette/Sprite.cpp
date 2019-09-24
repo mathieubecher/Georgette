@@ -60,9 +60,9 @@ void Sprite::Draw(Vector2 pos) {
 
 			if (posx >= 0 && posx < SCREEN_WIDTH && posy >= 0 && posy < SCREEN_HEIGHT){
 				CHAR_INFO poscase = this->GetCase(x,y);
-				if (poscase.Char.AsciiChar != ' ') {
+				if (poscase.Char.AsciiChar != ' ' || (poscase.Attributes & 0x00f0) != 0x00d0) {
 					buffer[posx + posy * SCREEN_WIDTH].Char.UnicodeChar = poscase.Char.UnicodeChar;
-					if((poscase.Attributes & 0x00f0) != 0x00d0) buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes & 0x00f0;
+					if ((poscase.Attributes & 0x00f0) != 0x00d0) buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes;
 				}
 			}
 		}
