@@ -3,8 +3,10 @@
 #include <stdio.h>
 
 #include "Rigidbody.h"
+
 #define SPEED 0.5f
 #define JUMP -0.3f
+#define COYOTE 100
 
 class Devil : public Rigidbody
 {
@@ -13,6 +15,10 @@ private:
 	INPUT_RECORD irInBuf[124];
 	DWORD cNumRead;
 	DWORD numEvent;
+
+
+	float coyote;
+	bool jumping;
 
 public :
 	Devil(int x, int y);

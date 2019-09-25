@@ -79,7 +79,7 @@ void Sprite::Draw(Vector2 pos) {
 						int bg = (buffer[posx + posy * SCREEN_WIDTH].Attributes & 0x00f0);
 						int color = (poscase.Attributes & 0x000f);
 						int bgcolor = bg | color;
-						buffer[posx + posy * SCREEN_WIDTH].Attributes = bgcolor ;
+						buffer[posx + posy * SCREEN_WIDTH].Attributes = bgcolor ;	
 					}
 				}
 			}
