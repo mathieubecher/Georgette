@@ -44,7 +44,7 @@ std::list<CHAR_INFO*> Map::CollideCase(Vector2f pos, Vector2 size) {
 }
 
 
-Map::Map(CHAR_INFO *sprite, int x, int y, int width, int height) : Physic2D(sprite, Vector2(width, height), Vector2f(0, 0)) {
+Map::Map(CHAR_INFO *sprite, int x, int y, int width, int height) : Physic2D(sprite, Vector2(width, height), Vector2f((float)x, (float)y)) {
 	Game *g = Game::Get();
 	g->AddChunk(this);
 	this->size = this->sprite.GetSize();

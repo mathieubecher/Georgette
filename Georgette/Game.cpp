@@ -33,8 +33,7 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 }
 
 void Game::Run() {
-	Map map = Map("tile/map.spr",0,0,0,0);
-	//Map *map = MapGenerator::GenerateFirstChunk();
+	Map *map = MapGenerator::GenerateFirstChunk();
 	Devil georgette = Devil(6,5);
 	Collidable test = Collidable();
 
