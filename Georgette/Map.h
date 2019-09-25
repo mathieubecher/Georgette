@@ -8,9 +8,7 @@ class Map: public Physic2D
 public:
 	static Map *originalChunk;
 
-	Map(CHAR_INFO *sprite, int x, int y, int width = SIZEW, int height = SIZEH) {
-
-	}
+	Map(CHAR_INFO *sprite, int x, int y, int width = SIZEW, int height = SIZEH);
 
 	Box Collider(Vector2f pos, Vector2 size);
 
