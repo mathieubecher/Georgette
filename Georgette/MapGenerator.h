@@ -16,4 +16,5 @@ public:
 	static void Erosion(CHAR_INFO *fullSprite);
 	static size_t CountEmptyAdjacent(CHAR_INFO *fullSprite, size_t i, size_t j);
 	static void GrassGenerator(CHAR_INFO *fullSprite);
+	static void Update();
 };

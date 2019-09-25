@@ -54,7 +54,7 @@ size_t MapGenerator::CountEmptyAdjacent(CHAR_INFO *fullSprite, size_t i, size_t 
 	if ( i +1 < SIZEW && fullSprite[i+1+(j*SIZEW)].Attributes == 0x00d0) {
 		++res;
 	}
-	if (j + 1 < SIZEW && fullSprite[i + ((j+1)*SIZEW)].Attributes == 0x00d0) {
+	if (j + 1 < SIZEH && fullSprite[i + ((j+1)*SIZEW)].Attributes == 0x00d0) {
 		++res;
 	}
 	return res;
@@ -119,6 +119,28 @@ void MapGenerator::PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y) {
 int MapGenerator::GetRandomFloorLevel() {
 	int res = SIZEH - rand() % (SIZEH * 2 / 3);
 	return res - (res % 4);
+}
+
+void MapGenerator::Update() {
+	int xpos = Game::Get()->Pos().x;
+	int ypos = Game::Get()->Pos().y;
+	int x1 = xpos;
+	int x2 = xpos + SCREEN_WIDTH;
+	int y1 = ypos;
+	int y2 = ypos + SCREEN_HEIGHT;
+	//ALORS là c'est dangereux faudra pondérer pour génerer aux bons endroits !!!!
+	/*if (!FindChunk(Vector2(x1, y1))) {
+		GenerateChunk(Vector2(x1, y1));
+	}
+	if (!FindChunk(Vector2(x2, y1))) {
+		GenerateChunk(Vector2(x2, y1));
+	}
+	if (!FindChunk(Vector2(x2, y2))) {
+		GenerateChunk(Vector2(x2, y2));
+	}
+	if (!FindChunk(Vector2(x1, y2))) {
+		GenerateChunk(Vector2(x1, y2));
+	}*/
 }
 
 GenFormat MapGenerator::GenerateFormat(Map *left, Map *right, Map *top, Map *bottom) {
@@ -214,6 +236,10 @@ Map *MapGenerator::FindChunk(Vector2 pos) {
 	std::list<Map*> chunks = Game::GetChunks();
 	for (auto i : chunks) {
 		if (i->GetPos() == pos) {
+			return i;
+		}
+		// Là aussi c'est dangereux !!
+		else if ((i->GetPos().x > pos.x - SIZEW &&  i->GetPos().x < pos.x + SIZEW) && (i->GetPos().y > pos.y - SIZEH &&  i->GetPos().y < pos.y + SIZEH)){
 			return i;
 		}
 	}

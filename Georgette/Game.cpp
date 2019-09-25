@@ -54,6 +54,7 @@ Game::~Game()
 void Game::Update() {
 
 	for (auto object : objects) object->Update();
+	MapGenerator::Update();
 }
 
 void Game::Draw() {
