@@ -27,8 +27,8 @@ Box Map::Collider(Vector2f pos, Vector2 size) {
 std::list<CHAR_INFO*> Map::CollideCase(Vector2f pos, Vector2 size) {
 	std::list<CHAR_INFO*> collideCase;
 
-	for (int x = ceil(pos.x); x < ceil(pos.x) + size.x; ++x) {
-		for (int y = ceil(pos.y); y < ceil(pos.y) + size.y; ++y) {
+	for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
+		for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
 			if (x >= this->pos.x &&
 				x < this->pos.x + this->size.x &&

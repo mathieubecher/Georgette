@@ -102,7 +102,6 @@ void Devil::UpdateAssShot(){
 	}
 	if (indicator > 0) {
 		assshotScore -= indicator;
-		if (assshotScore < 0) this->pos.y -= 1;
 	}
 	float destruct = 0;
 	if (assshotScore >= 0) destruct = 1;
@@ -133,10 +132,7 @@ void Devil::UpdateAssShot(){
 		assshot = false;
 		pos.y -= velocity;
 	}
-	/*
-	if (assshot && nbdestroy < cases.size()) {
-		pos.y -= velocity;
-	}*/
+	
 }
 
 bool Devil::Jump() {

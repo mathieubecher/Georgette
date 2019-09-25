@@ -54,7 +54,7 @@ size_t MapGenerator::CountEmptyAdjacent(CHAR_INFO *fullSprite, size_t i, size_t 
 	if ( i +1 < SIZEW && fullSprite[i+1+(j*SIZEW)].Attributes == 0x00d0) {
 		++res;
 	}
-	if (j + 1 < SIZEW && fullSprite[i + ((j+1)*SIZEW)].Attributes == 0x00d0) {
+	if (j + 1 < SIZEH && fullSprite[i + ((j+1)*SIZEW)].Attributes == 0x00d0) {
 		++res;
 	}
 	return res;
