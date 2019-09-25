@@ -13,4 +13,6 @@ public:
 	static CHAR_INFO *GenerateDirtBlock(Vector2 &size);
 	static GenFormat GenerateFormat(Map *left, Map *right, Map *top, Map *bottom);
 	static int GetRandomFloorLevel();
+	static void Erosion(CHAR_INFO *fullSprite);
+	static size_t CountEmptyAdjacent(CHAR_INFO *fullSprite, size_t i, size_t j);
 };
