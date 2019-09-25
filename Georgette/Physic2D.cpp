@@ -28,8 +28,8 @@ void Physic2D::Update() {
 	//sprite.TestSpriteSize(this->size);
 }
 
-bool Physic2D::Collider(Vector2f pos, Vector2 size) {
-	return false;
+Box Physic2D::Collider(Vector2f pos, Vector2 size) {
+	return Box();
 }
 
 Vector2f Physic2D::GetPos() {

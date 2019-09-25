@@ -8,7 +8,7 @@ Map::Map(std::string file, int x, int y, int width, int height) : Physic2D(file,
 	g->AddChunk(this);
 	this->size = this->sprite.GetSize();
 }
-bool Map::Collider(Vector2f pos, Vector2 size) {
+Box Map::Collider(Vector2f pos, Vector2 size) {
 	for (int x = ceil(pos.x); x < ceil(pos.x) + size.x; ++x) {
 		for (int y = ceil(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
@@ -17,10 +17,10 @@ bool Map::Collider(Vector2f pos, Vector2 size) {
 				y >= this->pos.y && 
 				y < this->pos.y + this->size.y){
 				if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0) {
-						return true;
+						return Box(x,y,1,1);
 				}
 			}
 		}
 	}
-	return false;
+	return Box();
 }

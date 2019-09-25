@@ -37,13 +37,13 @@ public:
 	bool operator==(const Vector2& other) const;
 };
 
-struct Rectangle
+struct Box
 {
 public :
 	float x;
 	float y;
 	float width;
 	float height;
-	Rectangle(float x, float y, float width, float height) :x(x), y(y), width(width),height(height) {}
-	Rectangle():x(0),y(0),width(0),height(0){}
+	Box(float x, float y, float width, float height) :x(x), y(y), width(width),height(height) {}
+	Box():x(0),y(0),width(0),height(0){}
 };
