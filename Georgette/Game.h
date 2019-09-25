@@ -24,7 +24,7 @@ class Game
 private:
 	HANDLE hOutput;
 	CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
-	NYTimer time;
+	
 	Vector2 pos;
 
 	
@@ -43,6 +43,7 @@ private:
 	int i;
 
 public:
+	NYTimer time;
 	static Game * Get();
 	static std::list<Map*> *GetChunks();
 	static std::list<Collidable*> GetCollidables();

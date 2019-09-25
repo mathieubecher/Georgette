@@ -3,18 +3,29 @@
 #include "Game.h"
 
  
-Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3),irInBuf(), hStdin(GetStdHandle(STD_INPUT_HANDLE))
+Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3),coyote(0.0f), assshot(false), jumping(false)
 {
-	SetConsoleMode(hStdin, ENABLE_WINDOW_INPUT);
 }
 
 void Devil::Update() {
 		
+	if (onfloor) coyote = 0;
+	else coyote += Game::Get()->time.getElapsedMs();
 
-	if (GetAsyncKeyState(VK_SPACE))Jump();
+
+	if (GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(0x5A) || GetAsyncKeyState(VK_UP))Jump();
+	else jumping = false;
+
+	if (assshot) velocity = 1;
 	Rigidbody::Update();
-	if (GetAsyncKeyState(0x51))Move(false);
-	else if (GetAsyncKeyState(0x44))Move();
+	if (onfloor && assshot) assshot = false;
+	
+	if(!assshot){
+		if (GetAsyncKeyState(0x51) || GetAsyncKeyState(VK_LEFT))Move(false);
+		else if (GetAsyncKeyState(0x44) || GetAsyncKeyState(VK_RIGHT))Move();
+	}
+
+	if (GetAsyncKeyState(0x53) || GetAsyncKeyState(VK_DOWN)) AssShot();
 	
 	
 	Game::Get()->SetPos(floor(this->pos.x - SCREEN_WIDTH / 2), floor(this->pos.y - SCREEN_HEIGHT / 2));
@@ -30,13 +41,20 @@ void Devil::Move(bool direction) {
 			pos.x -= (direction) ? SPEED : -SPEED;
 		}
 	}
-
-
 }
+
+void Devil::AssShot() {
+	if (!onfloor && !assshot) {
+		assshot = true;
+		jumping = false;
+	}
+}
+
 bool Devil::Jump() {
-	if (onfloor) {
+	if (coyote < COYOTE && !jumping) {
 		velocity = JUMP;
-		
+		jumping = true;
+
 		return true;
 	}
 	return false;
