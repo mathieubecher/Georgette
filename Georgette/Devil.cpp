@@ -53,7 +53,16 @@ void Devil::UpdateAssShot(){
 	++assshotScore;
 	pos.y += velocity;
 
-	// 
+	// Destruct case
+	/*for (auto chunk : *Game::GetChunks()) {
+		/*
+		std::list<CHAR_INFO*> cases = chunk->CollideCase(this->pos,this->size);
+		for (auto breakcase : cases) {
+			--assshotScore;
+			breakcase->Char.UnicodeChar = 'X';
+		}
+		*/
+	//}
 
 	if (assshotScore <= 0) assshot = false;
 }

@@ -89,7 +89,9 @@ void Sprite::Draw(Vector2 pos) {
 CHAR_INFO Sprite::GetCase(int x, int y) {
 	return this->sprite[x + y * this->size.x];
 }
-
+CHAR_INFO *Sprite::Case(int x, int y) {
+	return &this->sprite[x + y * this->size.x];
+}
 void Sprite::TestSpriteSize(Vector2 const &sizehitbox) {
 	for (int x = -this->pos.x; x < -this->pos.x + sizehitbox.x; ++x) {
 		for (int y = -this->pos.y; y < -this->pos.y + sizehitbox.y; ++y) {
