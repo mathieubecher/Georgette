@@ -11,19 +11,15 @@
 class Devil : public Rigidbody
 {
 private:
-	HANDLE hStdin;
-	INPUT_RECORD irInBuf[124];
-	DWORD cNumRead;
-	DWORD numEvent;
-
-
 	float coyote;
 	bool jumping;
+	bool assshot;
 
 public :
 	Devil(int x, int y);
 	void Update();
 	void Move(bool direction = true);
 	bool Jump();
+	void AssShot();
 };
 
