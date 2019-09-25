@@ -45,7 +45,7 @@ private:
 public:
 	NYTimer time;
 	static Game * Get();
-	static std::list<Map*> *GetChunks();
+	static std::list<Map*> GetChunks();
 	static std::list<Collidable*> GetCollidables();
 	static std::list<Physic2D*> GetObjects();
 	

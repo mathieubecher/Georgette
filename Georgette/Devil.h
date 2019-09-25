@@ -14,6 +14,9 @@ private:
 	float coyote;
 	bool jumping;
 	bool assshot;
+	int assshotScore;
+
+	void UpdateAssShot();
 
 public :
 	Devil(int x, int y);

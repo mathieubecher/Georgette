@@ -91,8 +91,8 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 
 
 Map *MapGenerator::FindChunk(Vector2 pos) {
-	std::list<Map*> *chunks = Game::GetChunks();
-	for (Map* i : *chunks) {
+	std::list<Map*> chunks = Game::GetChunks();
+	for (auto i : chunks) {
 		if (i->GetPos() == pos) {
 			return i;
 		}

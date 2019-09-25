@@ -3,30 +3,24 @@
 #include "Game.h"
 
  
-Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3),coyote(0.0f), assshot(false), jumping(false)
+Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3),coyote(0.0f), assshot(false), assshotScore(0), jumping(false)
 {
 }
 
 void Devil::Update() {
-		
-	if (onfloor) coyote = 0;
-	else coyote += Game::Get()->time.getElapsedMs();
-
-
-	if (GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(0x5A) || GetAsyncKeyState(VK_UP))Jump();
-	else jumping = false;
-
-	if (assshot) velocity = 1;
-	Rigidbody::Update();
-	if (onfloor && assshot) assshot = false;
-	
-	if(!assshot){
+	if (assshot){
+		UpdateAssShot();
+	}
+	else {
+		if (onfloor) coyote = 0;
+		else coyote += Game::Get()->time.getElapsedMs();
+		if (GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(0x5A) || GetAsyncKeyState(VK_UP))Jump();
+		else jumping = false;
+		Rigidbody::Update();
 		if (GetAsyncKeyState(0x51) || GetAsyncKeyState(VK_LEFT))Move(false);
 		else if (GetAsyncKeyState(0x44) || GetAsyncKeyState(VK_RIGHT))Move();
+		if (GetAsyncKeyState(0x53) || GetAsyncKeyState(VK_DOWN)) AssShot();
 	}
-
-	if (GetAsyncKeyState(0x53) || GetAsyncKeyState(VK_DOWN)) AssShot();
-	
 	
 	Game::Get()->SetPos(floor(this->pos.x - SCREEN_WIDTH / 2), floor(this->pos.y - SCREEN_HEIGHT / 2));
 }
@@ -49,9 +43,28 @@ void Devil::Move(bool direction) {
 
 void Devil::AssShot() {
 	if (!onfloor && !assshot) {
+		assshotScore = 1;
 		assshot = true;
 		jumping = false;
 	}
+}
+void Devil::UpdateAssShot(){
+	velocity = 1;
+	++assshotScore;
+	pos.y += velocity;
+
+	// Destruct case
+	/*for (auto chunk : *Game::GetChunks()) {
+		/*
+		std::list<CHAR_INFO*> cases = chunk->CollideCase(this->pos,this->size);
+		for (auto breakcase : cases) {
+			--assshotScore;
+			breakcase->Char.UnicodeChar = 'X';
+		}
+		*/
+	//}
+
+	if (assshotScore <= 0) assshot = false;
 }
 
 bool Devil::Jump() {

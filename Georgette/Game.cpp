@@ -82,8 +82,8 @@ void Game::Draw() {
 	}
 }
 
-std::list<Map*> *Game::GetChunks() {
-	return &Get()->chunks;
+std::list<Map*> Game::GetChunks() {
+	return Get()->chunks;
 }
 std::list<Collidable*> Game::GetCollidables() {
 	return Get()->collidables;

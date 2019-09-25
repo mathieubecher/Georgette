@@ -25,7 +25,7 @@ public:
 	virtual void Draw(Vector2 pos);
 	CHAR_INFO *GetSprite();
 	CHAR_INFO GetCase(int x, int y);
-
+	CHAR_INFO *Case(int x, int y);
 	~Sprite();
 };
 
