@@ -4,7 +4,7 @@
 #include <math.h>
 int Physic2D::ID = 0;
 
-Physic2D::Physic2D() :id(ID++), sprite(), pos(6,5), size(1,1)
+Physic2D::Physic2D() :id(ID++), sprite(), pos(6,14), size(1,1)
 {
 	Game *g = Game::Get();
 	g->AddObject(this);

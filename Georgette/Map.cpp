@@ -9,8 +9,8 @@ Map::Map(std::string file, int x, int y, int width, int height) : Physic2D(file,
 	this->size = this->sprite.GetSize();
 }
 Box Map::Collider(Vector2f pos, Vector2 size) {
-	for (int x = ceil(pos.x); x < ceil(pos.x) + size.x; ++x) {
-		for (int y = ceil(pos.y); y < ceil(pos.y) + size.y; ++y) {
+	for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
+		for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
 			if (x >= this->pos.x &&
 				x < this->pos.x + this->size.x &&

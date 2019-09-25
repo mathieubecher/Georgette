@@ -35,7 +35,7 @@ void Devil::Move(bool direction) {
 			Box collide = object->Collider(this->pos, this->size);
 			if (collide.width > 0 && collide.height > 0) {
 				if (direction) pos.x = collide.x - this->size.x;
-				else pos.x = collide.x + collide.width;
+				else pos.x = ceil(collide.x + collide.width);
 			}
 		}
 	}
@@ -43,7 +43,7 @@ void Devil::Move(bool direction) {
 
 void Devil::AssShot() {
 	if (!onfloor && !assshot) {
-		assshotScore = 1;
+		assshotScore = 0.5f;
 		this->pos.x = floor(this->pos.x);
 		this->pos.y = floor(this->pos.y);
 		assshot = true;
@@ -129,9 +129,14 @@ void Devil::UpdateAssShot(){
 		}
 	}
 	if (assshotScore <= 0) {
-		this->pos.y -= velocity;
+		//this->pos.y = this->pos.y - velocity + 0.1f;
 		assshot = false;
+		pos.y -= velocity;
 	}
+	/*
+	if (assshot && nbdestroy < cases.size()) {
+		pos.y -= velocity;
+	}*/
 }
 
 bool Devil::Jump() {
