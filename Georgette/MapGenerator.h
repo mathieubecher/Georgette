@@ -11,4 +11,6 @@ public:
 	static Map *GenerateFirstChunk();
 	static void PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y);
 	static CHAR_INFO *GenerateDirtBlock(Vector2 &size);
+	static GenFormat GenerateFormat(Map *left, Map *right, Map *top, Map *bottom);
+	static int GetRandomFloorLevel();
 };
