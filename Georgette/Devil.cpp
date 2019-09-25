@@ -44,27 +44,94 @@ void Devil::Move(bool direction) {
 void Devil::AssShot() {
 	if (!onfloor && !assshot) {
 		assshotScore = 1;
+		this->pos.x = floor(this->pos.x);
+		this->pos.y = floor(this->pos.y);
 		assshot = true;
 		jumping = false;
 	}
 }
+
+float Devil::CharToBreakIndicator(char c) {
+	switch (c) {
+	default:
+		return 0;
+		break;
+	case '*':
+		return 0.2f;
+		break;
+	case 'x':
+		return 0.4f;
+		break;
+	case '/':
+		return 0.6f;
+		break;
+	case 'X':
+		return 0.8f;
+		break;
+	}
+	return 0;
+}
+char Devil::BreakIndicatorToChar(float i) {
+	if (i == 0.2f) return ' ';
+	else if (i <= 0.4f) return '*';
+	else if (i <= 0.6f) return 'x';
+	else if (i <= 0.8f) return '/';
+	else if (i <= 1) return 'X';
+}
+
+
 void Devil::UpdateAssShot(){
 	velocity = 1;
-	++assshotScore;
+	assshotScore += (assshotScore > 5)?1: 0.5f;
 	pos.y += velocity;
 
+	std::list<CHAR_INFO*> cases;
 	// Destruct case
-	/*for (auto chunk : *Game::GetChunks()) {
-		/*
-		std::list<CHAR_INFO*> cases = chunk->CollideCase(this->pos,this->size);
-		for (auto breakcase : cases) {
-			--assshotScore;
-			breakcase->Char.UnicodeChar = 'X';
+	for (auto chunk : Game::GetChunks()) {
+		
+		std::list<CHAR_INFO*> caseschunk = chunk->CollideCase(this->pos,this->size);
+		cases.insert(cases.end(),caseschunk.begin(),caseschunk.end());
+	}
+	// Get break indicator
+	int maxForce = 1;
+	float indicator = 0;
+	for (auto breakcase : cases) {
+		if ((breakcase->Attributes & 0x00f0) == 0) {
+			indicator += 1 - CharToBreakIndicator(breakcase->Char.UnicodeChar);
 		}
-		*/
-	//}
+	}
+	if (indicator > 0) {
+		assshotScore -= indicator;
+		if (assshotScore < 0) this->pos.y -= 1;
+	}
+	float destruct = 0;
+	if (assshotScore >= 0) destruct = 1;
+	else destruct = (assshotScore + indicator) / indicator;
 
-	if (assshotScore <= 0) assshot = false;
+	int nbdestroy = 0;
+	for (auto breakcase : cases) {
+		if ((breakcase->Attributes & 0x00f0) == 0x00f0)
+		{
+			breakcase->Char.UnicodeChar = ' ';
+			breakcase->Attributes = 0x00f0;
+			++nbdestroy;
+		}
+		else {
+			float actualValue = CharToBreakIndicator(breakcase->Char.UnicodeChar);
+			if (actualValue + destruct < 1)
+				breakcase->Char.UnicodeChar = BreakIndicatorToChar(actualValue + destruct);
+			else {
+				breakcase->Attributes = 0x00f0;
+				breakcase->Char.UnicodeChar = ' ';
+				++nbdestroy;
+			}
+
+		}
+	}
+	if (assshotScore <= 0) {
+		this->pos.y -= velocity;
+		assshot = false;
+	}
 }
 
 bool Devil::Jump() {

@@ -14,8 +14,8 @@ private:
 	float coyote;
 	bool jumping;
 	bool assshot;
-	int assshotScore;
-
+	float assshotScore;
+	
 	void UpdateAssShot();
 
 public :
@@ -24,5 +24,7 @@ public :
 	void Move(bool direction = true);
 	bool Jump();
 	void AssShot();
+	float CharToBreakIndicator(char c);
+	char BreakIndicatorToChar(float i);
 };
 
