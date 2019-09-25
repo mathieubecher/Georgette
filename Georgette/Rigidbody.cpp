@@ -14,19 +14,21 @@ void Rigidbody::Update() {
 	onfloor = false;
 	for (auto object : Game::GetObjects()) {
 		// test bottom
-		if (velocity > 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y + this->size.y - 1), Vector2(this->size.x, 1)))
-		{
-			if(velocity <=1)pos.y = floor(pos.y);
-			else pos.y = ceil(pos.y - velocity);
-			velocity = 0;
-			onfloor = true;
-		}
-		else {
-			//test top
-			if (velocity < 0 && object->id != this->id && object->Collider(Vector2f(this->pos.x, this->pos.y), Vector2(this->size.x, 1)))
+		if(object->id != this->id){
+			Box collide = object->Collider(this->pos,this->size);
+			if (velocity > 0 && collide.width > 0 && collide.height > 0)
 			{
-			pos.y = floor(pos.y-velocity) ;
-			velocity = 0.2f;
+				pos.y = collide.y - this->size.y;
+				velocity = 0;
+				onfloor = true;
+			}
+			else {
+				//test top
+				if (velocity < 0 && collide.width > 0 && collide.height > 0)
+				{
+				pos.y = collide.y + collide.height;
+				velocity = 0.2f;
+				}
 			}
 		}
 	}

@@ -36,9 +36,13 @@ void Devil::Move(bool direction) {
 	pos.x += (direction)?SPEED:-SPEED;
 
 	for (auto object : Game::GetObjects()) {
-		if (object->id != this->id && object->Collider(this->pos, this->size))
+		if (object->id != this->id)
 		{
-			pos.x -= (direction) ? SPEED : -SPEED;
+			Box collide = object->Collider(this->pos, this->size);
+			if (collide.width > 0 && collide.height > 0) {
+				if (direction) pos.x = collide.x - this->size.x;
+				else pos.x = collide.x + collide.width;
+			}
 		}
 	}
 }
