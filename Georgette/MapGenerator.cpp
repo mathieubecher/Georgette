@@ -23,36 +23,82 @@ CHAR_INFO *MapGenerator::GenerateDirtBlock(Vector2 &size) {
 	for (size_t i = 0; i < n; ++i) {
 		res[i].Char.UnicodeChar = ' ';
 		res[i].Attributes = 0x00d0;
-		if (std::rand() % n != 0) {
-			randValue = std::rand() % 100;
+		if (std::rand() % (n*40) != 0) {
+			randValue = std::rand() % 300;
 			res[i].Attributes = 0x000f;
-			if (randValue > 15) {
+			if (randValue > 10) {
 				res[i].Char.UnicodeChar = ' ';
 			}
-			else if (randValue > 11) {
+			else if (randValue > 5) {
 				res[i].Char.UnicodeChar = '.';
 			}
-			else if (randValue > 8) {
+			else if (randValue > 0) {
 				res[i].Char.UnicodeChar = 'o';
 			}
-			else if (randValue > 7) {
-				res[i].Char.UnicodeChar = ',';
-			}
-			else if (randValue > 5) {
-				res[i].Char.UnicodeChar = ';';
-			}
-			else if (randValue > 2) {
-				res[i].Char.UnicodeChar = ':';
-			}
-			else if (randValue > 1) {
-				res[i].Char.UnicodeChar = 'O';
-			}
 			else {
-				res[i].Char.UnicodeChar = 'i';
+				res[i].Char.UnicodeChar = 'O';
 			}
 		}
 	}
 	return res;
+}
+
+size_t MapGenerator::CountEmptyAdjacent(CHAR_INFO *fullSprite, size_t i, size_t j) {
+	size_t res = 0;
+	if (i > 0 && fullSprite[i-1 + (j*SIZEW)].Attributes == 0x00d0) {
+		++res;
+	}
+	if (j > 0 && fullSprite[i + ((j-1)*SIZEW)].Attributes == 0x00d0) {
+		++res;
+	}
+	if ( i +1 < SIZEW && fullSprite[i+1+(j*SIZEW)].Attributes == 0x00d0) {
+		++res;
+	}
+	if (j + 1 < SIZEW && fullSprite[i + ((j+1)*SIZEW)].Attributes == 0x00d0) {
+		++res;
+	}
+	return res;
+}
+
+void MapGenerator::Erosion(CHAR_INFO *fullSprite) {
+	CHAR_INFO *oldSprite = new CHAR_INFO[SIZEW*SIZEH];
+	for (size_t i = 0; i < SIZEW*SIZEH; ++i) {
+		oldSprite[i] = fullSprite[i];
+	}
+	for (size_t i = 0; i < SIZEW; ++i) {
+		for (size_t j = 0; j < SIZEH; ++j) {
+			if (CountEmptyAdjacent(oldSprite, i, j) > 1 && rand()%2 > 0) {
+				fullSprite[i + j*SIZEW].Attributes = 0x00d0;
+				fullSprite[i + j*SIZEW].Char.UnicodeChar = ' ';
+			}
+		}
+	}
+	delete[] oldSprite;
+}
+
+void MapGenerator::GrassGenerator(CHAR_INFO *fullSprite) {
+	for (size_t i = 0; i < SIZEW; ++i) {
+		for (size_t j = 0; j < SIZEH; ++j) {
+			if (j + 1 < SIZEH && fullSprite[i + j*SIZEW].Attributes == 0x00d0 && fullSprite[i + (j+1)*SIZEW].Attributes == 0x000f) {
+				size_t randValue = rand() % 100;
+				if (randValue > 60) {
+					fullSprite[i + j*SIZEW].Char.UnicodeChar = '.';
+				}
+				else if (randValue > 30) {
+					fullSprite[i + j*SIZEW].Char.UnicodeChar = ',';
+				}
+				else if (randValue > 5){
+					fullSprite[i + j*SIZEW].Char.UnicodeChar = '_';
+				}
+				else if (randValue > 2) {
+					fullSprite[i + j*SIZEW].Char.UnicodeChar = '\\';
+				}
+				else {
+					fullSprite[i + j*SIZEW].Char.UnicodeChar = '/';
+				}
+			}
+		}
+	}
 }
 
 void MapGenerator::PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y) {
@@ -112,20 +158,12 @@ GenFormat MapGenerator::GenerateFormat(Map *left, Map *right, Map *top, Map *bot
 
 Map *MapGenerator::GenerateFirstChunk() {
 	srand(time(NULL));
-	/*
-	CHAR_INFO *sprite = new CHAR_INFO[SIZEW*SIZEH];
-	for (size_t j = 0; j < SIZEW*SIZEH; ++j) {
-		sprite[j].Attributes = 0x00d0;
-		sprite[j].Char.UnicodeChar = ' ';
-	}
-	for (size_t i = 0; i < 10; ++i) {
-		PutSprite(sprite,i*8,36);
-	}
-	Map *first = new Map(sprite, 0, 0);
-	first->format = MapGenerator::GenerateFormat(nullptr,nullptr,nullptr,nullptr);
-	return first;
-	*/
-	return GenerateChunk(Vector2(0,0));
+	Map * res = GenerateChunk(Vector2(0,0));
+	GenerateChunk(Vector2(SIZEW, 0));
+	GenerateChunk(Vector2(-SIZEW, 0));
+	GenerateChunk(Vector2(0, SIZEH));
+	GenerateChunk(Vector2(0, -SIZEH));
+	return res;
 }
 
 Map *MapGenerator::GenerateChunk(Vector2 pos) {
@@ -141,6 +179,16 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 	if (targetLevel != floorLevel) {
 		sign = (targetLevel - floorLevel) / abs(targetLevel - floorLevel);
 	}
+	if (format.left == -1) {
+		for (size_t j = 0; j < SIZEH; j += 4) {
+			PutSprite(sprite, 0, j);
+		}
+	}
+	if (format.right == -1) {
+		for (size_t j = 0; j < SIZEH; j += 4) {
+			PutSprite(sprite, SIZEW-8, j);
+		}
+	}
 	for (size_t i = 0; i < 10; ++i) {
 		if (floorLevel != targetLevel) {
 			int randValue = rand() % 3;
@@ -152,7 +200,11 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 			PutSprite(sprite, i * 8, j);
 		}
 	}
-	Map *res = new Map(sprite, 0, 0);
+	for (size_t i = 0; i < 5; ++i) {
+		Erosion(sprite);
+	}
+	GrassGenerator(sprite);
+	Map *res = new Map(sprite, pos.x, pos.y);
 	res->format = format;
 	return res;
 }
