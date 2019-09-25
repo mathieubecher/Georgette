@@ -26,7 +26,7 @@ Box Map::Collider(Vector2f pos, Vector2 size) {
 }
 std::list<CHAR_INFO*> Map::CollideCase(Vector2f pos, Vector2 size) {
 	std::list<CHAR_INFO*> collideCase;
-	/*
+
 	for (int x = ceil(pos.x); x < ceil(pos.x) + size.x; ++x) {
 		for (int y = ceil(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
@@ -34,13 +34,12 @@ std::list<CHAR_INFO*> Map::CollideCase(Vector2f pos, Vector2 size) {
 				x < this->pos.x + this->size.x &&
 				y >= this->pos.y &&
 				y < this->pos.y + this->size.y) {
-				if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0) {
+				if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0 || (this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Char.UnicodeChar != ' ')) {
 					collideCase.push_back(this->sprite.Case(x - this->pos.x, y - this->pos.y));
 				}
 			}
 		}
 	}
-	*/
 	return collideCase;
 }
 
