@@ -9,5 +9,6 @@ public:
 	static Map *GenerateChunk(Vector2 pos);
 	static Map *FindChunk(Vector2 pos);
 	static Map *GenerateFirstChunk();
-	static void PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y, std::string fileName);
+	static void PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y);
+	static CHAR_INFO *GenerateDirtBlock(Vector2 &size);
 };

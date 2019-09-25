@@ -20,7 +20,6 @@ Physic2D::Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos) : id(ID++), sp
 {
 	Game *g = Game::Get();
 	g->AddObject(this);
-
 }
 
 

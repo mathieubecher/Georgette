@@ -8,6 +8,13 @@ Map::Map(std::string file, int x, int y, int width, int height) : Physic2D(file,
 	g->AddChunk(this);
 	this->size = this->sprite.GetSize();
 }
+
+Map::Map(CHAR_INFO *sprite, int x, int y, int width, int height) : Physic2D(sprite, Vector2(width, height), Vector2f(0, 0)) {
+	Game *g = Game::Get();
+	g->AddChunk(this);
+	this->size = this->sprite.GetSize();
+}
+
 bool Map::Collider(Vector2f pos, Vector2 size) {
 	for (int x = ceil(pos.x); x < ceil(pos.x) + size.x; ++x) {
 		for (int y = ceil(pos.y); y < ceil(pos.y) + size.y; ++y) {

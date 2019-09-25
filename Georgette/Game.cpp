@@ -33,9 +33,8 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 }
 
 void Game::Run() {
-	srand(time.getElapsedMs());
-	Map map = Map("tile/map.spr",0,0,0,0);
-	//Map *map = MapGenerator::GenerateFirstChunk();
+	//Map map = Map("tile/map.spr",0,0,0,0);
+	Map *map = MapGenerator::GenerateFirstChunk();
 	Devil georgette = Devil(6,5);
 	Collidable test = Collidable();
 
@@ -51,7 +50,7 @@ void Game::Run() {
 Game::~Game()
 {
 	for (auto i : chunks) {
-		delete(i->GetSprite()->GetSprite());
+		delete(i);
 	}
 }
 
