@@ -21,15 +21,13 @@ void Game::SetPos(int x, int y) {
 }
 
 Game * Game::Get() {
-	if (!Game::game)
-		Game::game = new Game();
-	return Game::game;
+	static Game game;
+	return &game;
 }
 
 Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 {
 	time.getElapsedMs(true);
-	Game::game = this;
 }
 
 void Game::Run() {
@@ -101,5 +99,3 @@ void Game::AddChunk(Map * m) {
 void Game::AddCollidable(Collidable * c) {
 	this->collidables.push_back(c);
 }
-
-Game * Game::game = nullptr;

@@ -32,8 +32,6 @@ private:
 	std::list<Map*> chunks;
 	std::list<Collidable*> collidables;
 
-	static Game * game;
-
 	void Update();
 	void Draw();
 
