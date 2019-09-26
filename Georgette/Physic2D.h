@@ -10,6 +10,7 @@ protected:
 	static int ID;
 
 public:
+	float wait;
 	const int id;
 	Physic2D();
 	Physic2D(std::string file, int x = 0, int y = 0, int width = 1, int height = 1);
@@ -20,5 +21,6 @@ public:
 	virtual void Draw();
 	Vector2f GetPos();
 	Sprite *GetSprite();
+	void Wait(float wait);
 };
 

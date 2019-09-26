@@ -11,7 +11,6 @@
 #include "Collidable.h"
 #include "Map.h"
 
-
 #define MAXFRAME 60
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 30
@@ -26,6 +25,7 @@ private:
 	CHAR_INFO buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 	
 	Vector2 pos;
+	Vector2 posChange;
 
 	
 	std::list<Physic2D*> objects;
@@ -39,7 +39,8 @@ private:
 	~Game();
 
 	int i;
-
+	float wait;
+	float screenshake;
 public:
 	NYTimer time;
 	static Game * Get();
@@ -55,4 +56,6 @@ public:
 	void AddCollidable(Collidable * c);
 	void Run();
 	float DistanceToCam(Vector2f pos);
+	void Wait(float wait);
+	void ScreenShake(float time, int force);
 };
