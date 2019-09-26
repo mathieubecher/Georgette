@@ -47,9 +47,10 @@ public :
 	int y;
 	char c;
 };
+
 class Map: public Physic2D
 {
-private :
+protected :
 	std::list<CaseSave> casesSave;
 
 

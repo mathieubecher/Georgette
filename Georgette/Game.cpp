@@ -10,6 +10,7 @@
 #include <time.h>
 #include <cstdbool>
 #include <sstream>
+#include "People.h"
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
@@ -35,6 +36,7 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 void Game::Run() {
 	Map *map = MapGenerator::GenerateFirstChunk();
 	Devil georgette = Devil(6,5);
+	People p = People(4, 0);
 
 
 	while (1) {

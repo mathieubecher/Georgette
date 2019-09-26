@@ -6,5 +6,7 @@ public:
 	House(CHAR_INFO *sprite, int x, int y, int width = SIZEW, int height = SIZEH);
 	~House();
 	bool IsHouse();
+	void Update();
+	void AddPeople(int x, int y);
 };
 
