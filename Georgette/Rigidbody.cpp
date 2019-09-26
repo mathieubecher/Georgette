@@ -10,26 +10,24 @@ Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Co
 void Rigidbody::Update() {
 
 	velocity += GRAVITY;
-	pos.y += velocity;
+	pos.y += velocity * Game::Get()->time.getElapsedMs()*MAXFRAME / 1000.0f;;
 	onfloor = false;
 	for (auto object : Game::GetObjects()) {
 		// test bottom
 		if(object->id != this->id){
 			Box collide = object->Collider(this->pos,this->size);
-			if (velocity > 0 && collide.width > 0 && collide.height > 0)
+			if (velocity >= 0 && collide.width > 0 && collide.height > 0)
 			{
 				pos.y = collide.y - this->size.y;
 				velocity = 0;
 				onfloor = true;
 			}
-			else {
-				//test top
-				if (velocity < 0 && collide.width > 0 && collide.height > 0)
-				{
-				pos.y = collide.y + collide.height;
-				velocity = 0.2f;
-				}
+			else if (velocity < 0 && collide.width > 0 && collide.height > 0)
+			{
+			pos.y = collide.y + collide.height;
+			velocity = 0.1f;
 			}
+			
 		}
 	}
 

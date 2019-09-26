@@ -109,3 +109,7 @@ void Game::AddChunk(Map * m) {
 void Game::AddCollidable(Collidable * c) {
 	this->collidables.push_back(c);
 }
+
+float Game::DistanceToCam(Vector2f pos) {
+	return sqrt(pow(pos.x - this->pos.x, 2) + pow(pos.y - this->pos.y, 2));
+}

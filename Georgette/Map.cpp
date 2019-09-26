@@ -13,11 +13,11 @@ Box Map::Collider(Vector2f pos, Vector2 size) {
 		for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
 			for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
-				if (x >= this->pos.x &&
-					x < this->pos.x + this->size.x &&
-					y >= this->pos.y &&
-					y < this->pos.y + this->size.y) {
-					if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0) {
+				if (x >= (this->pos.x) &&
+					x < (this->pos.x) + this->size.x &&
+					y >= (this->pos.y) &&
+					y < (this->pos.y) + this->size.y) {
+					if ((this->sprite.GetCase(x - (this->pos.x), y - (this->pos.y)).Attributes & 0x00f0) == 0) {
 						return Box(x, y, 1, 1);
 					}
 				}

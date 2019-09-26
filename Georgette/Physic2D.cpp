@@ -24,7 +24,7 @@ Physic2D::Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos) : id(ID++), sp
 
 
 void Physic2D::Update() {
-	//sprite.TestSpriteSize(this->size);
+
 }
 
 Box Physic2D::Collider(Vector2f pos, Vector2 size) {
