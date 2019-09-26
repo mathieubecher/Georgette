@@ -336,7 +336,7 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 		}
 		
 		else if(rand()%5 == 0) {
-			int housesId = rand() % HOUSESIZE;;
+			int housesId = rand() % HOUSESIZE;
 			size_t randValue = 5 + rand() % 8;
 			for (size_t k = 0; k < 7; ++k) {
 				for (size_t j = 0; j + houses[housesId].size.y + 1 < SIZEH; ++j) {
@@ -377,5 +377,4 @@ void MapGenerator::InitHouses() {
 	houses[2].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/littlehouse.spr", &houses[2].size, nullptr);
 	houses[3].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/bighouse.spr", &houses[3].size, nullptr);
 	houses[4].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/mansion.spr", &houses[4].size, nullptr);
-
 }
