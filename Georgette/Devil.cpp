@@ -16,9 +16,12 @@ void Devil::Update() {
 		else coyote += Game::Get()->time.getElapsedMs();
 		if (GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(0x5A) || GetAsyncKeyState(VK_UP))Jump();
 		else jumping = false;
+
 		Rigidbody::Update();
+
 		if (GetAsyncKeyState(0x51) || GetAsyncKeyState(VK_LEFT))Move(false);
 		else if (GetAsyncKeyState(0x44) || GetAsyncKeyState(VK_RIGHT))Move();
+
 		if (GetAsyncKeyState(0x53) || GetAsyncKeyState(VK_DOWN)) AssShot();
 		else asshotinputpress = false;
 	}
@@ -33,10 +36,10 @@ void Devil::Move(bool direction) {
 	for (auto object : Game::GetObjects()) {
 		if (object->id != this->id)
 		{
-			Box collide = object->Collider(this->pos, this->size);
+			Box collide = object->Collider(Vector2f(this->pos.x,(velocity>0)?(int)floor(this->pos.y): ceil(this->pos.y)), this->size);
 			if (collide.width > 0 && collide.height > 0) {
 				if (direction) pos.x = collide.x - this->size.x;
-				else pos.x = ceil(collide.x + collide.width);
+				else pos.x = collide.x + collide.width;
 			}
 		}
 	}

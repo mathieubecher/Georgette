@@ -54,4 +54,5 @@ public:
 	void AddChunk(Map * m);
 	void AddCollidable(Collidable * c);
 	void Run();
+	float DistanceToCam(Vector2f pos);
 };
