@@ -1,11 +1,24 @@
 #pragma once
 #include "Map.h"
+
+#define HOUSESIZE 1
+
+
+struct HouseSprite {
+public:
+	CHAR_INFO *sprite;
+	Vector2 size;
+	HouseSprite(CHAR_INFO *sprite, Vector2 size):sprite(sprite),size(size) { }
+	HouseSprite():sprite(),size(){}
+};
+
 class MapGenerator
 {
 public:
 	static CHAR_INFO *castle;
 	static CHAR_INFO *building;
 	static Vector2 sizes[5];
+	static HouseSprite houses[HOUSESIZE];
 	MapGenerator();
 	~MapGenerator();
 	static Map *GenerateChunk(Vector2 pos);

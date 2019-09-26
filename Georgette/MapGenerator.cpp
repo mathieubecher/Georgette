@@ -10,6 +10,7 @@
 CHAR_INFO *MapGenerator::castle;
 CHAR_INFO *MapGenerator::building;
 Vector2 MapGenerator::sizes[5];
+HouseSprite MapGenerator::houses[HOUSESIZE];
 
 MapGenerator::MapGenerator()
 {
@@ -325,22 +326,25 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 	GrassGenerator(sprite);
 	if (!format.bottom) {
 		if (rand()%2 == 0) {
-			size_t randValue = 5 + rand() % (SIZEW - 5 - sizes[0].x);
-			for (size_t j = 0; j + sizes[0].y + 1 < SIZEH; ++j) {
+			int housesId =0;
+			size_t randValue = 5 + rand() % (SIZEW - 5 - houses[housesId].size.x);
+			for (size_t j = 0; j + houses[housesId].size.y + 1 < SIZEH; ++j) {
 				if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j + 1)].Attributes == 0x000f) {
-					PutHouse(building, sizes[0], Vector2(pos.x + randValue, pos.y + j + 1 - sizes[0].y), sprite, randValue, j + 1 - sizes[0].y);
+					PutHouse(houses[housesId].sprite, houses[housesId].size, Vector2(pos.x + randValue, pos.y + j + 1 - houses[housesId].size.y), sprite, randValue, j + 1 - houses[housesId].size.y);
 				}
 			}
 		}
+		
 		else if(rand()%5 == 0) {
+			int housesId = rand() % HOUSESIZE;;
 			size_t randValue = 5 + rand() % 8;
 			for (size_t k = 0; k < 7; ++k) {
-				for (size_t j = 0; j + sizes[0].y + 1 < SIZEH; ++j) {
+				for (size_t j = 0; j + houses[housesId].size.y + 1 < SIZEH; ++j) {
 					if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j + 1)].Attributes == 0x000f) {
-						PutHouse(building, sizes[0], Vector2(pos.x + randValue, pos.y + j + 1 - sizes[0].y), sprite, randValue, j + 1 - sizes[0].y);
+						PutHouse(houses[housesId].sprite, houses[housesId].size, Vector2(pos.x + randValue, pos.y + j + 1 - houses[housesId].size.y), sprite, randValue, j + 1 - houses[housesId].size.y);
 					}
 				}
-				randValue += 4 + (rand() % 5);
+				randValue += houses[housesId].size.x + 1 + (rand() % 5);
 			}
 		}
 	}
@@ -368,23 +372,10 @@ Map *MapGenerator::FindChunk(Vector2 pos) {
 }
 
 void MapGenerator::InitHouses() {
-	//castle = SpriteGenerator::CreateSprite("houses/castle.spr", &sizes[0], nullptr);
-	/*castle = new CHAR_INFO[11*5];
-	for () {
+	houses[0].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/castle.spr", &houses[0].size, nullptr);
+	houses[1].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/building.spr", &houses[1].size, nullptr);
+	houses[2].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/littlehouse.spr", &houses[2].size, nullptr);
+	houses[3].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/bighouse.spr", &houses[3].size, nullptr);
+	houses[4].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/mansion.spr", &houses[4].size, nullptr);
 
-	}
-	sizes[0] = Vector2(11,5);*/
-
-	sizes[0] = Vector2(3,4);
-	building = new CHAR_INFO[3 * 4];
-	building[0].Attributes = 0x00d0;
-	building[0].Char.UnicodeChar = '_';
-	building[1].Attributes = 0x00d0;
-	building[1].Char.UnicodeChar = '_';
-	building[2].Attributes = 0x00d0;
-	building[2].Char.UnicodeChar = '#';
-	for (size_t i = 3; i < 3 * 4; ++i) {
-		building[i].Attributes = 0x000f;
-		building[i].Char.UnicodeChar = '|';
-	}
 }
