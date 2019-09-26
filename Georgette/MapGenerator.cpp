@@ -5,6 +5,10 @@
 #include <math.h>
 #include <cstdlib>
 #include <time.h>
+#include "House.h"
+
+CHAR_INFO *MapGenerator::castle;
+Vector2 MapGenerator::sizes[5];
 
 MapGenerator::MapGenerator()
 {
@@ -115,6 +119,10 @@ void MapGenerator::Erosion(CHAR_INFO *fullSprite) {
 				fullSprite[i + j*SIZEW].Attributes = 0x00d0;
 				fullSprite[i + j*SIZEW].Char.UnicodeChar = ' ';
 			}
+			else if((i > 0 && oldSprite[i-1+j*SIZEW].Attributes== 0x00d0) || (i+1 < SIZEW && oldSprite[i+1+j*SIZEW].Attributes == 0x00d0) && rand()%10 ==0) {
+				fullSprite[i + j*SIZEW].Attributes = 0x00d0;
+				fullSprite[i + j*SIZEW].Char.UnicodeChar = ' ';
+			}
 		}
 	}
 	delete[] oldSprite;
@@ -143,6 +151,23 @@ void MapGenerator::GrassGenerator(CHAR_INFO *fullSprite) {
 			}
 		}
 	}
+}
+
+void MapGenerator::PutHouse(CHAR_INFO *house, Vector2 size, Vector2 pos, CHAR_INFO *fullSprite, size_t x, size_t y) {
+	CHAR_INFO *res = new CHAR_INFO[size.x * size.y];
+	for (size_t i = 0; i < size.x * size.y; ++i) {
+		res[i].Attributes = house[i].Attributes;
+		res[i].Char.UnicodeChar = house[i].Char.UnicodeChar;
+	}
+	for (size_t i = 0; i < size.x; ++i) {
+		for (size_t j = 0; j < size.y; ++j) {
+			if ((i + x < SIZEW) && (j + y < SIZEH)) {
+				fullSprite[(i + x) + SIZEW*(j + y)].Attributes = 0x00d0;
+				fullSprite[(i + x) + SIZEW*(j + y)].Char.UnicodeChar = ' ';
+			}
+		}
+	}
+	House *h = new House(res, pos.x, pos.y, size.x, size.y);
 }
 
 void MapGenerator::PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y, bool stalactite) {
@@ -243,6 +268,7 @@ GenFormat MapGenerator::GenerateFormat(Map *left, Map *right, Map *top, Map *bot
 
 Map *MapGenerator::GenerateFirstChunk() {
 	srand(time(NULL));
+	InitHouses();
 	Map * res = GenerateChunk(Vector2(0,0));
 	GenerateChunk(Vector2(SIZEW, 0));
 	GenerateChunk(Vector2(-SIZEW, 0));
@@ -291,11 +317,12 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 		Erosion(sprite);
 	}
 	for (size_t i = 0; i < 10; ++i) {
-		if (rand() % 3 == 0 && (i!=0 || format.left!=-1) && (i != 9 || format.right!=-1) && ((i > 6)||(i<4) || !format.top)) {
+		if (rand() % 3 == 0 && (i!=0 || format.left!=-1) && (i != 9 || format.right!=-1) && ((i > 7)||(i<3) || !format.top)) {
 			PutSprite(sprite, i*8, 0, true);
 		}
 	}
 	GrassGenerator(sprite);
+	//PutHouse(castle, sizes[0], Vector2(pos.x+ SIZEW / 2, pos.y+ SIZEH / 2),sprite, SIZEW/2, SIZEH/2 );
 	Map *res = new Map(sprite, pos.x, pos.y);
 	res->format = format;
 	return res;
@@ -314,4 +341,14 @@ Map *MapGenerator::FindChunk(Vector2 pos) {
 		}
 	}
 	return nullptr;
+}
+
+void MapGenerator::InitHouses() {
+	//castle = SpriteGenerator::CreateSprite("houses/castle.spr", &sizes[0], nullptr);
+	castle = new CHAR_INFO[4];
+	for (size_t i = 0; i < 4; ++i) {
+		castle[i].Attributes = 0x000f;
+		castle[i].Char.UnicodeChar = 'Q';
+	}
+	sizes[0] = Vector2(2,2);
 }
