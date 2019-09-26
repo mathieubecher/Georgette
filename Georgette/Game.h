@@ -18,6 +18,7 @@
 
 #define WIDTH 500
 #define HEIGHT 500
+#define MAXSCORE 300
 
 class Game
 {
@@ -42,7 +43,9 @@ private:
 	int i;
 	float wait;
 	float screenshake;
+	void DrawScore();
 public:
+	int score;
 	Devil georgette;
 	NYTimer time;
 	static Game * Get();

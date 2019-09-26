@@ -50,6 +50,7 @@ void People::Update() {
 				sprite.Case(0, 1)->Attributes = 0x00d4;
 				sprite.Case(0, 1)->Char.UnicodeChar = '_';
 				timeDelete = 2000;
+				++Game::Get()->score;
 			}
 		}
 		else {

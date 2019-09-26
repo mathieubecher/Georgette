@@ -17,6 +17,7 @@ House::~House()
 void House::Update() {
 	for(auto caseSave : casesSave){
 		if (sprite.GetCase(caseSave.x, caseSave.y).Char.UnicodeChar == ' ') {
+			++Game::Get()->score;
 			AddPeople(caseSave.x + pos.x, caseSave.y + pos.y);
 			for (int i = 0; i < rand() % 10;++i )Particle *p = new Particle(caseSave.x + pos.x, caseSave.y + pos.y);
 

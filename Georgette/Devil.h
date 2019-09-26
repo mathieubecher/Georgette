@@ -13,6 +13,8 @@ class Devil : public Rigidbody
 private:
 	float coyote;
 	bool jumping;
+	Sprite iddle_left;
+	Sprite iddle_right;
 	
 	float assshotScore;
 	bool asshotinputpress;

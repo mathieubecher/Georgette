@@ -2,7 +2,7 @@
 #include "Devil.h"
 #include "Game.h"
  
-Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3,false),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false)
+Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3,false),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false), iddle_left("../resources/sprites/georgette/georgette_idle_left.spr"), iddle_right(sprite)
 {
 }
 
@@ -38,14 +38,24 @@ void Devil::Update() {
 
 void Devil::Move(bool direction) {
 	pos.x += ((direction)?SPEED:-SPEED) * Game::Get()->time.getElapsedMs()*MAXFRAME/1000.0f;
+	if (direction) {
+		sprite = iddle_right;
+	}
+	else {
+		sprite = iddle_left;
+	}
 
 	for (auto object : Game::GetObjects()) {
 		if (object->id != this->id)
 		{
 			Box collide = object->Collider(Vector2f(this->pos.x,(velocity>0)?(int)floor(this->pos.y): ceil(this->pos.y)), this->size);
 			if (collide.width > 0 && collide.height > 0) {
-				if (direction) pos.x = collide.x - this->size.x;
-				else pos.x = collide.x + collide.width;
+				if (direction) {
+					pos.x = collide.x - this->size.x;
+				}
+				else {
+					pos.x = collide.x + collide.width;
+				}
 			}
 		}
 	}
@@ -102,6 +112,7 @@ void Devil::UpdateAssShot(){
 		{
 			breakcase->Char.UnicodeChar = ' ';
 			breakcase->Attributes = 0x00d0;
+			
 			++nbdestroy;
 		}
 		else {
