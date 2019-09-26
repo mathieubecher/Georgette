@@ -110,7 +110,9 @@ void Devil::UpdateAssShot(){
 	if (assshotScore <= 0) {
 		assshot = false;
 
-		this->pos.y -= velocity;
+		//this->pos.y -= velocity;
+		velocity = 0;
+		Rigidbody::Update();
 		onfloor = true;
 	}
 	
