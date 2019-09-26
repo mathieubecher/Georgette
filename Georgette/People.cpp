@@ -3,6 +3,7 @@
 #include "Game.h"
 
 void People::Update() {
+	
 	velocity += GRAVITY;
 	pos.y += velocity * Game::Get()->time.getElapsedMs()*MAXFRAME / 1000.0f;;
 	onfloor = false;
@@ -26,23 +27,36 @@ void People::Update() {
 	}
 
 	pos.y += velocity;
-
-	Collidable::Update();
-	pos.x += ((direction) ? SPEED : -SPEED) * Game::Get()->time.getElapsedMs()*MAXFRAME / 1000.0f;
-	sprite.Case(0, 1)->Char.UnicodeChar = ((int)floor(pos.x)%2 == 0)?'T':'X';
-	for (auto object : Game::GetChunks()) {
-		if (object->id != this->id)
-		{
-			Box collide = object->Collider(Vector2f(this->pos.x, (velocity > 0) ? (int)floor(this->pos.y) : ceil(this->pos.y)), this->size);
-			if (collide.width > 0 && collide.height > 0) {
-				if (direction) pos.x = collide.x - this->size.x;
-				else pos.x = collide.x + collide.width;
-				direction = !direction;
+	if (!die) {
+		Collidable::Update();
+		pos.x += ((direction) ? SPEED : -SPEED) * Game::Get()->time.getElapsedMs()*MAXFRAME / 1000.0f;
+		sprite.Case(0, 1)->Char.UnicodeChar = ((int)floor(pos.x) % 2 == 0) ? 'T' : 'X';
+		for (auto object : Game::GetChunks()) {
+			if (object->id != this->id)
+			{
+				Box collide = object->Collider(Vector2f(this->pos.x, (velocity > 0) ? (int)floor(this->pos.y) : ceil(this->pos.y)), this->size);
+				if (collide.width > 0 && collide.height > 0) {
+					if (direction) pos.x = collide.x - this->size.x;
+					else pos.x = collide.x + collide.width;
+					direction = !direction;
+				}
 			}
 		}
+		if(countdown <= 0){
+			if (Game::Get()->georgette.Collider(this->pos, this->size).width > 0){
+				die = true;
+				sprite.Case(0, 0)->Attributes = 0x00d0;
+				sprite.Case(0, 0)->Char.UnicodeChar = ' ';
+				sprite.Case(0, 1)->Attributes = 0x00d4;
+				sprite.Case(0, 1)->Char.UnicodeChar = '_';
+
+			}
+		}
+		else countdown -= Game::Get()->time.getElapsedMs();
+
 	}
 }
-People::People(int x, int y): Rigidbody("tile/people.spr",x,y,1,2){
+People::People(int x, int y): Rigidbody("tile/people.spr",x,y,1,2),die(false),countdown(2000){
 
 }
 People::~People() {

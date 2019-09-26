@@ -10,6 +10,7 @@
 #include"Physic2D.h"
 #include "Collidable.h"
 #include "Map.h"
+#include "Devil.h"
 
 #define MAXFRAME 60
 #define SCREEN_WIDTH 120
@@ -31,7 +32,7 @@ private:
 	std::list<Physic2D*> objects;
 	std::list<Map*> chunks;
 	std::list<Collidable*> collidables;
-
+	
 	void Update();
 	void Draw();
 
@@ -42,6 +43,7 @@ private:
 	float wait;
 	float screenshake;
 public:
+	Devil georgette;
 	NYTimer time;
 	static Game * Get();
 	static std::list<Map*> GetChunks();

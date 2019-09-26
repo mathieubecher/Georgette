@@ -28,14 +28,14 @@ Game * Game::Get() {
 	return &game;
 }
 
-Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
+Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0), georgette(0,0)
 {
 	time.getElapsedMs(true);
 }
 
 void Game::Run() {
 	Map *map = MapGenerator::GenerateFirstChunk();
-	Devil georgette = Devil(6,5);
+	
 
 
 	while (1) {
@@ -73,7 +73,8 @@ void Game::Update() {
 
 		}
 	}
-
+	if (georgette.wait <= 0) georgette.Update();
+	else georgette.wait -= time.getElapsedMs();
 	MapGenerator::Update();
 }
 
@@ -81,7 +82,7 @@ void Game::Draw() {
 	
 	for (auto chunk : chunks) chunk->Draw();
 	for (auto collidable : collidables) collidable->Draw();
-	
+	georgette.Draw();
 
 	COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
 	COORD dwBufferCoord = { 0, 0 };

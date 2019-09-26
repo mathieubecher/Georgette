@@ -2,7 +2,7 @@
 #include "Devil.h"
 #include "Game.h"
  
-Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false)
+Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3,false),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false)
 {
 }
 

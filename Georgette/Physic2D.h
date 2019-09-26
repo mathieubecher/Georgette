@@ -12,8 +12,8 @@ protected:
 public:
 	float wait;
 	const int id;
-	Physic2D();
-	Physic2D(std::string file, int x = 0, int y = 0, int width = 1, int height = 1);
+	Physic2D(bool includeCircle = true);
+	Physic2D(std::string file, int x = 0, int y = 0, int width = 1, int height = 1,bool includeCircle= true);
 	Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos);
 	~Physic2D();
 	virtual Box Collider(Vector2f pos, Vector2 size);

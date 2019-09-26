@@ -12,6 +12,6 @@ protected :
 public:
 	void Update();
 	void SetVelocity(float v);
-	Rigidbody(std::string file, int x = 0, int y = 0, int width = 1, int height = 1);
+	Rigidbody(std::string file, int x = 0, int y = 0, int width = 1, int height = 1,bool includeCircle = true);
 };
 

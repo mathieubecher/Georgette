@@ -7,12 +7,16 @@ Box Collidable::Collider(Vector2f pos, Vector2 size) {
 		pos.y < this->pos.y + this->size.y &&
 		size.y + pos.y > this->pos.y)? Box(this->pos.x,this->pos.y,this->size.x,this->size.y): Box();
 }
-Collidable::Collidable(std::string file, int x, int y, int width, int height) : Physic2D(file, x, y, width, height)
+Collidable::Collidable(std::string file, int x, int y, int width, int height, bool includeCircle) : Physic2D(file, x, y, width, height,includeCircle)
 {
-	Game *g = Game::Get();
-	g->AddCollidable(this);
+	if(includeCircle){
+		Game *g = Game::Get();
+		g->AddCollidable(this);
+	}
 }
-Collidable::Collidable() : Physic2D() {
-	Game *g = Game::Get();
-	g->AddCollidable(this);
+Collidable::Collidable(bool includeCircle) : Physic2D(includeCircle) {
+	if(includeCircle){
+		Game *g = Game::Get();
+		g->AddCollidable(this);
+	}
 }

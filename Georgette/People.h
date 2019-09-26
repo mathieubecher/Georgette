@@ -8,6 +8,8 @@ class People:public Rigidbody
 {
 public:
 	bool direction;
+	bool die;
+	float countdown;
 	void Update();
 	People(int x, int y);
 	~People();

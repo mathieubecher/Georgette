@@ -3,7 +3,7 @@
 #include "Game.h"
 
 
-Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Collidable(file, x, y, width, height),onfloor(false)
+Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height, bool includeCircle) : Collidable(file, x, y, width, height,includeCircle),onfloor(false)
 {
 
 }
