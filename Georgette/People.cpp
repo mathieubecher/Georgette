@@ -43,7 +43,7 @@ void People::Update() {
 			}
 		}
 		if(countdown <= 0){
-			if (Game::Get()->georgette.Collider(this->pos, this->size).width > 0){
+			if (Game::Get()->georgette.assshot && Game::Get()->georgette.Collider(this->pos, this->size).width > 0){
 				die = true;
 				sprite.Case(0, 0)->Attributes = 0x00d0;
 				sprite.Case(0, 0)->Char.UnicodeChar = ' ';
@@ -56,7 +56,7 @@ void People::Update() {
 
 	}
 }
-People::People(int x, int y): Rigidbody("tile/people.spr",x,y,1,2),die(false),countdown(2000){
+People::People(int x, int y): Rigidbody("tile/people.spr",x,y,1,2),die(false),countdown(500){
 
 }
 People::~People() {

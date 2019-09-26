@@ -13,13 +13,14 @@ class Devil : public Rigidbody
 private:
 	float coyote;
 	bool jumping;
-	bool assshot;
+	
 	float assshotScore;
 	bool asshotinputpress;
 	
 	void UpdateAssShot();
 
 public :
+	bool assshot;
 	Devil(int x, int y);
 	void Update();
 	void Move(bool direction = true);
