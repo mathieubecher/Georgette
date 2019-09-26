@@ -28,7 +28,7 @@ void Devil::Update() {
 
 
 void Devil::Move(bool direction) {
-	pos.x += (direction)?SPEED:-SPEED;
+	pos.x += ((direction)?SPEED:-SPEED) * Game::Get()->time.getElapsedMs()*MAXFRAME/1000.0f;
 
 	for (auto object : Game::GetObjects()) {
 		if (object->id != this->id)

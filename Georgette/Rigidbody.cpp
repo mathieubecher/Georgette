@@ -10,7 +10,7 @@ Rigidbody::Rigidbody(std::string file, int x, int y, int width, int height) : Co
 void Rigidbody::Update() {
 
 	velocity += GRAVITY;
-	pos.y += velocity;
+	pos.y += velocity * Game::Get()->time.getElapsedMs()*MAXFRAME / 1000.0f;;
 	onfloor = false;
 	for (auto object : Game::GetObjects()) {
 		// test bottom
