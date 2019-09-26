@@ -4,14 +4,14 @@
 #include <math.h>
 int Physic2D::ID = 0;
 
-Physic2D::Physic2D(bool includeCircle) :id(ID++), sprite(), pos(6,14), size(1,1)
+Physic2D::Physic2D(bool includeCircle) :id(ID++), sprite(), pos(6,14), size(1,1), deleteObject(false)
 {
 	if(includeCircle){
 		Game *g = Game::Get();
 		g->AddObject(this);
 	}
 }
-Physic2D::Physic2D(std::string file, int x, int y, int width, int height, bool includeCircle) : id(ID++), sprite("../resources/sprites/" + file), pos((float)x, (float)y), size((float)width, (float)height)
+Physic2D::Physic2D(std::string file, int x, int y, int width, int height, bool includeCircle) : id(ID++), sprite("../resources/sprites/" + file), pos((float)x, (float)y), size((float)width, (float)height), deleteObject(false)
 {
 	if(includeCircle){
 		Game *g = Game::Get();
@@ -20,7 +20,7 @@ Physic2D::Physic2D(std::string file, int x, int y, int width, int height, bool i
 	
 }
 
-Physic2D::Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos) : id(ID++), sprite(sprite, size), pos(pos), size(size)
+Physic2D::Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos) : id(ID++), sprite(sprite, size), pos(pos), size(size), deleteObject(false)
 {
 	Game *g = Game::Get();
 	g->AddObject(this);

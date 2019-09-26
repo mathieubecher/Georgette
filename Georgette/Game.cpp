@@ -38,12 +38,8 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0),
 
 void Game::Run() {
 	Map *map = MapGenerator::GenerateFirstChunk();
-	
-
 
 	while (1) {
-		
-
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
 
 			if (time.getElapsedMs() >= wait) Update();
@@ -56,7 +52,6 @@ void Game::Run() {
 			else screenshake -= time.getElapsedMs();
 			time.getElapsedMs(true);
 		}
-		
 	}
 }
 Game::~Game()
@@ -71,12 +66,17 @@ void Game::Update() {
 	std::list<Physic2D*> remove;
 
 	for (auto object : objects) {
-		if (!object->GetSprite()->clipped) {
+		if (!object->GetSprite()->clipped && !object->deleteObject) {
 			if(object->wait <= 0) object->Update();
 			else object->wait -= time.getElapsedMs();
-
-
 		}
+		else if(object->deleteObject || abs(object->GetPos().y - this->pos.y)>200 || abs(object->GetPos().x - this->pos.x) > 500) remove.push_front(object);
+	}
+	while (remove.size() > 0) {
+		objects.remove(remove.front());
+		chunks.remove((Map*)remove.front());
+		collidables.remove((Collidable*)remove.front());
+		remove.pop_front();
 	}
 	if (georgette.wait <= 0) georgette.Update();
 	else georgette.wait -= time.getElapsedMs();

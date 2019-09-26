@@ -6,6 +6,8 @@
 
 class People:public Rigidbody
 {
+private:
+	float timeDelete;
 public:
 	bool direction;
 	bool die;

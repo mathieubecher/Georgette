@@ -49,11 +49,18 @@ void People::Update() {
 				sprite.Case(0, 0)->Char.UnicodeChar = ' ';
 				sprite.Case(0, 1)->Attributes = 0x00d4;
 				sprite.Case(0, 1)->Char.UnicodeChar = '_';
-
+				timeDelete = 2000;
 			}
 		}
-		else countdown -= Game::Get()->time.getElapsedMs();
+		else {
+			countdown -= Game::Get()->time.getElapsedMs();
 
+		}
+
+	}
+	else {
+		timeDelete -= Game::Get()->time.getElapsedMs();
+		if (timeDelete <= 0) deleteObject = true;
 	}
 }
 People::People(int x, int y): Rigidbody("tile/people.spr",x,y,1,2),die(false),countdown(500){

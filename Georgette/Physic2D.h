@@ -10,6 +10,7 @@ protected:
 	static int ID;
 
 public:
+	bool deleteObject;
 	float wait;
 	const int id;
 	Physic2D(bool includeCircle = true);

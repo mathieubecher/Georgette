@@ -1,5 +1,6 @@
 #pragma once
 #include "Map.h"
+#include "Particle.h"
 class House : public Map
 {
 public:

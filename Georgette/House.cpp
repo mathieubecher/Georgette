@@ -2,6 +2,7 @@
 #include "House.h"
 #include "Game.h"
 #include "People.h"
+
 House::House(CHAR_INFO *sprite, int x, int y, int width, int height) : Map(sprite,x,y,width,height) {
 
 }
@@ -15,7 +16,11 @@ House::~House()
 }
 void House::Update() {
 	for(auto caseSave : casesSave){
-		if (sprite.GetCase(caseSave.x, caseSave.y).Char.UnicodeChar == ' ') AddPeople(caseSave.x+pos.x, caseSave.y + pos.y);
+		if (sprite.GetCase(caseSave.x, caseSave.y).Char.UnicodeChar == ' ') {
+			AddPeople(caseSave.x + pos.x, caseSave.y + pos.y);
+			for (int i = 0; i < rand() % 10;++i )Particle *p = new Particle(caseSave.x + pos.x, caseSave.y + pos.y);
+
+		}
 	}
 
 	Map::Update();
