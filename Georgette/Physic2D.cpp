@@ -45,6 +45,7 @@ void Physic2D::Draw() {
 
 Physic2D::~Physic2D()
 {
+	
 }
 
 

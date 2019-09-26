@@ -22,5 +22,6 @@ public:
 	Vector2f GetPos();
 	Sprite *GetSprite();
 	void Wait(float wait);
+
 };
 

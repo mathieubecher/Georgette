@@ -55,6 +55,7 @@ protected :
 
 
 public:
+	~Map();
 	static Map *originalChunk;
 	GenFormat format;
 	void Update();
@@ -63,10 +64,12 @@ public:
 	Map(CHAR_INFO *sprite, int x, int y, int width = SIZEW, int height = SIZEH);
 
 	Box Collider(Vector2f pos, Vector2 size);
+
 	std::list<CHAR_INFO*> CollideCase(Vector2f pos, Vector2 size);
 
 	Map(std::string file, int x = 0, int y = 0, int width = 1, int height = 1);
 	static float CharToBreakIndicator(char c);
 	static char BreakIndicatorToChar(float i);
 	virtual bool IsHouse();
+	void DeleteObj();
 };

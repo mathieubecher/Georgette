@@ -65,6 +65,8 @@ Game::~Game()
 
 void Game::Update() {
 
+	std::list<Physic2D*> remove;
+
 	for (auto object : objects) {
 		if (!object->GetSprite()->clipped) {
 			if(object->wait <= 0) object->Update();
@@ -126,7 +128,15 @@ void Game::AddChunk(Map * m) {
 void Game::AddCollidable(Collidable * c) {
 	this->collidables.push_back(c);
 }
-
+void Game::RemoveObject(Physic2D * p) {
+	this->objects.remove(p);
+}
+void Game::RemoveChunk(Map * m) {
+	this->chunks.remove(m);
+}
+void Game::RemoveCollidable(Collidable * c) {
+	this->collidables.remove(c);
+}
 
 float Game::DistanceToCam(Vector2f pos) {
 	return sqrt(pow(pos.x - this->pos.x, 2) + pow(pos.y - this->pos.y, 2));

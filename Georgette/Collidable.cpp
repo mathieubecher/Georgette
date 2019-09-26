@@ -20,3 +20,5 @@ Collidable::Collidable(bool includeCircle) : Physic2D(includeCircle) {
 		g->AddCollidable(this);
 	}
 }
+Collidable::~Collidable() {
+}

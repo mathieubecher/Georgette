@@ -56,6 +56,9 @@ public:
 	void AddObject(Physic2D * p);
 	void AddChunk(Map * m);
 	void AddCollidable(Collidable * c);
+	void RemoveObject(Physic2D * p);
+	void RemoveChunk(Map * m);
+	void RemoveCollidable(Collidable * c);
 	void Run();
 	float DistanceToCam(Vector2f pos);
 	void Wait(float wait);

@@ -115,3 +115,5 @@ char Map::BreakIndicatorToChar(float i) {
 	else if (i <= 1) return 'X';
 	else return '.';
 }
+Map::~Map() {
+}
