@@ -67,4 +67,5 @@ public:
 	Map(std::string file, int x = 0, int y = 0, int width = 1, int height = 1);
 	static float CharToBreakIndicator(char c);
 	static char BreakIndicatorToChar(float i);
+	virtual bool IsHouse();
 };

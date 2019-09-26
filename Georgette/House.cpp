@@ -6,6 +6,9 @@ House::House(CHAR_INFO *sprite, int x, int y, int width, int height) : Map(sprit
 
 }
 
+bool House::IsHouse() {
+	return true;
+}
 
 House::~House()
 {

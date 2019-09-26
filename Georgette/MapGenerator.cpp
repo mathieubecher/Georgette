@@ -8,6 +8,7 @@
 #include "House.h"
 
 CHAR_INFO *MapGenerator::castle;
+CHAR_INFO *MapGenerator::building;
 Vector2 MapGenerator::sizes[5];
 
 MapGenerator::MapGenerator()
@@ -322,7 +323,14 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 		}
 	}
 	GrassGenerator(sprite);
-	//PutHouse(castle, sizes[0], Vector2(pos.x+ SIZEW / 2, pos.y+ SIZEH / 2),sprite, SIZEW/2, SIZEH/2 );
+	if (!format.bottom) {
+		size_t randValue = 5 + rand() % (SIZEW - 5 - sizes[0].x);
+		for (size_t j = 0; j + sizes[0].y +1 < SIZEH; ++j) {
+			if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j+1)].Attributes == 0x000f) {
+				PutHouse(building, sizes[0], Vector2(pos.x + randValue, pos.y + j+1-sizes[0].y), sprite, randValue, j+1-sizes[0].y);
+			}
+		}
+	}
 	Map *res = new Map(sprite, pos.x, pos.y);
 	res->format = format;
 	return res;
@@ -332,6 +340,9 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 Map *MapGenerator::FindChunk(Vector2 pos) {
 	std::list<Map*> chunks = Game::GetChunks();
 	for (auto i : chunks) {
+		if (i->IsHouse()) {
+			continue;
+		}
 		if (i->GetPos() == pos) {
 			return i;
 		}
@@ -345,10 +356,22 @@ Map *MapGenerator::FindChunk(Vector2 pos) {
 
 void MapGenerator::InitHouses() {
 	//castle = SpriteGenerator::CreateSprite("houses/castle.spr", &sizes[0], nullptr);
-	castle = new CHAR_INFO[4];
-	for (size_t i = 0; i < 4; ++i) {
-		castle[i].Attributes = 0x000f;
-		castle[i].Char.UnicodeChar = 'Q';
+	/*castle = new CHAR_INFO[11*5];
+	for () {
+
 	}
-	sizes[0] = Vector2(2,2);
+	sizes[0] = Vector2(11,5);*/
+
+	sizes[0] = Vector2(3,4);
+	building = new CHAR_INFO[3 * 4];
+	building[0].Attributes = 0x00d0;
+	building[0].Char.UnicodeChar = '_';
+	building[1].Attributes = 0x00d0;
+	building[1].Char.UnicodeChar = '_';
+	building[2].Attributes = 0x000f;
+	building[2].Char.UnicodeChar = '#';
+	for (size_t i = 3; i < 3 * 4; ++i) {
+		building[i].Attributes = 0x000f;
+		building[i].Char.UnicodeChar = '|';
+	}
 }

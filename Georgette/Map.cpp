@@ -82,6 +82,10 @@ Map::Map(CHAR_INFO *sprite, int x, int y, int width, int height) : Physic2D(spri
 	this->size = this->sprite.GetSize();
 }
 
+bool Map::IsHouse() {
+	return false;
+}
+
 float Map::CharToBreakIndicator(char c) {
 	switch (c) {
 	default:

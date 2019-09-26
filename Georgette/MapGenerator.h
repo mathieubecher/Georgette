@@ -4,6 +4,7 @@ class MapGenerator
 {
 public:
 	static CHAR_INFO *castle;
+	static CHAR_INFO *building;
 	static Vector2 sizes[5];
 	MapGenerator();
 	~MapGenerator();
