@@ -1,7 +1,7 @@
 #pragma once
 #include "Map.h"
 
-#define HOUSESIZE 1
+#define HOUSESIZE 5
 
 
 struct HouseSprite {
