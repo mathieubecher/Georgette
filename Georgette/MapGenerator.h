@@ -17,4 +17,5 @@ public:
 	static size_t CountEmptyAdjacent(CHAR_INFO *fullSprite, size_t i, size_t j);
 	static void GrassGenerator(CHAR_INFO *fullSprite);
 	static void Update();
+	static Vector2 GetStartingMapPos(Vector2 pos);
 };

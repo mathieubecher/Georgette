@@ -124,23 +124,36 @@ int MapGenerator::GetRandomFloorLevel() {
 void MapGenerator::Update() {
 	int xpos = Game::Get()->Pos().x;
 	int ypos = Game::Get()->Pos().y;
-	int x1 = xpos;
-	int x2 = xpos + SCREEN_WIDTH;
-	int y1 = ypos;
-	int y2 = ypos + SCREEN_HEIGHT;
-	//ALORS là c'est dangereux faudra pondérer pour génerer aux bons endroits !!!!
-	/*if (!FindChunk(Vector2(x1, y1))) {
-		GenerateChunk(Vector2(x1, y1));
+	size_t const n = 12;
+	Vector2 pos[n];
+	pos[0] = GetStartingMapPos(Vector2(xpos,ypos));
+	pos[1] = Vector2(pos[0].x + SIZEW, pos[0].y);
+	pos[2] = Vector2(pos[0].x - SIZEW, pos[0].y);
+	pos[3] = Vector2(pos[0].x, pos[0].y + SIZEH);
+	pos[4] = Vector2(pos[0].x, pos[0].y - SIZEH);
+	pos[5] = Vector2(pos[0].x + SIZEW, pos[0].y + SIZEH);
+	pos[6] = Vector2(pos[0].x - SIZEW, pos[0].y + SIZEH);
+	pos[7] = Vector2(pos[0].x + SIZEW, pos[0].y - SIZEH);
+	pos[8] = Vector2(pos[0].x - SIZEW, pos[0].y - SIZEH);
+	pos[9] = Vector2(pos[0].x + 2*SIZEW, pos[0].y + SIZEH);
+	pos[10] = Vector2(pos[0].x + 2*SIZEW, pos[0].y - SIZEH);
+	pos[11] = Vector2(pos[0].x + 2*SIZEW, pos[0].y);
+
+
+	for (size_t i = 0; i < n; ++i) {
+		if (!FindChunk(pos[i])) {
+			GenerateChunk(pos[i]);
+		}
 	}
-	if (!FindChunk(Vector2(x2, y1))) {
-		GenerateChunk(Vector2(x2, y1));
-	}
-	if (!FindChunk(Vector2(x2, y2))) {
-		GenerateChunk(Vector2(x2, y2));
-	}
-	if (!FindChunk(Vector2(x1, y2))) {
-		GenerateChunk(Vector2(x1, y2));
-	}*/
+}
+
+
+Vector2 MapGenerator::GetStartingMapPos(Vector2 pos) {
+	int x = pos.x;
+	int y = pos.y;
+	x = x - (x % SIZEW);
+	y = y - (y % SIZEH);
+	return Vector2(x,y);
 }
 
 GenFormat MapGenerator::GenerateFormat(Map *left, Map *right, Map *top, Map *bottom) {
@@ -222,7 +235,7 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 			PutSprite(sprite, i * 8, j);
 		}
 	}
-	for (size_t i = 0; i < 5; ++i) {
+	for (size_t i = 0; i < 7; ++i) {
 		Erosion(sprite);
 	}
 	GrassGenerator(sprite);
