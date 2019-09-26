@@ -326,7 +326,7 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 	GrassGenerator(sprite);
 	if (!format.bottom) {
 		if (rand()%2 == 0) {
-			int housesId =0;
+			int housesId = rand() % HOUSESIZE;
 			size_t randValue = 5 + rand() % (SIZEW - 5 - houses[housesId].size.x);
 			for (size_t j = 0; j + houses[housesId].size.y + 1 < SIZEH; ++j) {
 				if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j + 1)].Attributes == 0x000f) {
@@ -335,10 +335,11 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 			}
 		}
 		
-		else if(rand()%5 == 0) {
-			int housesId = rand() % HOUSESIZE;;
+		else  {
+			
 			size_t randValue = 5 + rand() % 8;
 			for (size_t k = 0; k < 7; ++k) {
+				int housesId = rand() % HOUSESIZE;
 				for (size_t j = 0; j + houses[housesId].size.y + 1 < SIZEH; ++j) {
 					if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j + 1)].Attributes == 0x000f) {
 						PutHouse(houses[housesId].sprite, houses[housesId].size, Vector2(pos.x + randValue, pos.y + j + 1 - houses[housesId].size.y), sprite, randValue, j + 1 - houses[housesId].size.y);
@@ -372,10 +373,10 @@ Map *MapGenerator::FindChunk(Vector2 pos) {
 }
 
 void MapGenerator::InitHouses() {
-	houses[0].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/castle.spr", &houses[0].size, nullptr);
+	houses[4].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/castle.spr", &houses[4].size, nullptr);
 	houses[1].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/building.spr", &houses[1].size, nullptr);
 	houses[2].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/littlehouse.spr", &houses[2].size, nullptr);
 	houses[3].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/bighouse.spr", &houses[3].size, nullptr);
-	houses[4].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/mansion.spr", &houses[4].size, nullptr);
+	houses[0].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/mansion.spr", &houses[0].size, nullptr);
 
 }
