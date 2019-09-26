@@ -364,7 +364,7 @@ Map *MapGenerator::FindChunk(Vector2 pos) {
 		if (i->GetPos() == pos) {
 			return i;
 		}
-		// Là aussi c'est dangereux !!
+		// Lï¿½ aussi c'est dangereux !!
 		else if ((i->GetPos().x > pos.x - SIZEW &&  i->GetPos().x < pos.x + SIZEW) && (i->GetPos().y > pos.y - SIZEH &&  i->GetPos().y < pos.y + SIZEH)){
 			return i;
 		}
@@ -377,6 +377,6 @@ void MapGenerator::InitHouses() {
 	houses[1].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/building.spr", &houses[1].size, nullptr);
 	houses[2].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/littlehouse.spr", &houses[2].size, nullptr);
 	houses[3].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/bighouse.spr", &houses[3].size, nullptr);
-	houses[0].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/mansion.spr", &houses[0].size, nullptr);
+	houses[4].sprite = SpriteGenerator::CreateSprite("../resources/sprites/houses/mansion.spr", &houses[4].size, nullptr);
 
 }

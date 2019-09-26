@@ -36,7 +36,6 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0)
 void Game::Run() {
 	Map *map = MapGenerator::GenerateFirstChunk();
 	Devil georgette = Devil(6,5);
-	People p = People(4, 0);
 
 
 	while (1) {
@@ -66,6 +65,7 @@ void Game::Update() {
 		if (!object->GetSprite()->clipped) {
 			if(object->wait <= 0) object->Update();
 			else object->wait -= time.getElapsedMs();
+
 			if (screenshake < 0) {
 				posChange.x = 0;
 				posChange.y = 0;
@@ -136,7 +136,6 @@ void Game::Wait(float wait) {
 }
 void Game::ScreenShake(float time, int force) {
 	screenshake = time;
-	if(posChange.x == 0) posChange.x = (rand() % 10 > 5) ? -force : force;
-	else posChange.x = -posChange.x;
-	if (posChange.x == 0)posChange.y = (rand() % 10 > 5) ? -force : force;
+	posChange.x = (rand() % 10 > 5) ? -force : force;
+	posChange.y = (rand() % 10 > 5) ? -force : force;
 }
