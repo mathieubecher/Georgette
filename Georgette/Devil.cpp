@@ -24,8 +24,15 @@ void Devil::Update() {
 		if (GetAsyncKeyState(0x53) || GetAsyncKeyState(VK_DOWN)) AssShot();
 		else asshotinputpress = false;
 	}
-	
-	Game::Get()->SetPos(floor(this->pos.x - SCREEN_WIDTH / 2), floor(this->pos.y - SCREEN_HEIGHT / 2));
+	Game *g = Game::Get();
+	int x = g->RealPos().x;
+	if (this->pos.x - g->RealPos().x < SCREEN_WIDTH / 3) x = this->pos.x - SCREEN_WIDTH / 3;
+	else if (g->RealPos().x + SCREEN_WIDTH - this->pos.x< SCREEN_WIDTH / 3) x = this->pos.x - 2 * SCREEN_WIDTH / 3;
+	int y = g->RealPos().y;
+	if (this->pos.y - g->RealPos().y < SCREEN_HEIGHT / 3) y = this->pos.y - SCREEN_HEIGHT / 3;
+	else if (g->RealPos().y + SCREEN_HEIGHT - this->pos.y < SCREEN_HEIGHT / 3) y = this->pos.y - 2 * SCREEN_HEIGHT / 3;
+
+	Game::Get()->SetPos(x,y);
 }
 
 

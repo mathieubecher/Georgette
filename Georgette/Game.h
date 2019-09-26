@@ -52,6 +52,7 @@ public:
 	
 	CHAR_INFO * Buffer();
 	Vector2 Pos();
+	Vector2 RealPos();
 	void SetPos(int x, int y);
 	void AddObject(Physic2D * p);
 	void AddChunk(Map * m);

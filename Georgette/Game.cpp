@@ -18,6 +18,9 @@ CHAR_INFO * Game::Buffer() {
 Vector2 Game::Pos() {
 	return Vector2(this->pos.x + this->posChange.x,this->pos.y + this->posChange.y);
 } 
+Vector2 Game::RealPos() {
+	return pos;
+}
 void Game::SetPos(int x, int y) {
 	pos.x = x;
 	pos.y = y;
