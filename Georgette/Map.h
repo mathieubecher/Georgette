@@ -40,16 +40,31 @@ public:
 	}
 };
 
+struct CaseSave {
+public :
+	CaseSave(int x, int y, char c): x(x),y(y),c(c) {}
+	int x;
+	int y;
+	char c;
+};
 class Map: public Physic2D
 {
+private :
+	std::list<CaseSave> casesSave;
+
+
 public:
 	static Map *originalChunk;
 	GenFormat format;
-
+	void Update();
+	void ActionCase(CaseSave c);
+	void AddForce(CHAR_INFO & c, float force);
 	Map(CHAR_INFO *sprite, int x, int y, int width = SIZEW, int height = SIZEH);
 
 	Box Collider(Vector2f pos, Vector2 size);
 	std::list<CHAR_INFO*> CollideCase(Vector2f pos, Vector2 size);
 
 	Map(std::string file, int x = 0, int y = 0, int width = 1, int height = 1);
+	static float CharToBreakIndicator(char c);
+	static char BreakIndicatorToChar(float i);
 };

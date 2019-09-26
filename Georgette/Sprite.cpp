@@ -60,26 +60,30 @@ void Sprite::Instantiate() {
 void Sprite::Draw(Vector2 pos) {
 	Game *g = Game::Get();
 	CHAR_INFO * buffer = g->Buffer();
+	if (pos.x + this->pos.x < g->Pos().x + SCREEN_WIDTH &&
+		pos.x + this->pos.x + size.x > g->Pos().x &&
+		pos.y + this->pos.y < g->Pos().y + SCREEN_HEIGHT &&
+		size.y + pos.y + this->pos.y > g->Pos().y){
+		for (int x = 0; x < this->size.x; ++x) {
+			for (int y = 0; y < this->size.y; ++y) {
 
-	for (int x = 0; x < this->size.x; ++x) {
-		for (int y = 0; y < this->size.y; ++y) {
 
+				int posx = floor(pos.x) + this->pos.x + x - g->Pos().x;
+				int posy = floor(pos.y)  + this->pos.y + y - g->Pos().y;
 
-			int posx = floor(pos.x) + this->pos.x + x - g->Pos().x;
-			int posy = floor(pos.y)  + this->pos.y + y - g->Pos().y;
+				if (posx >= 0 && posx < SCREEN_WIDTH && posy >= 0 && posy < SCREEN_HEIGHT){
+					CHAR_INFO poscase = this->GetCase(x,y);
+					if (poscase.Char.AsciiChar != ' ' || (poscase.Attributes & 0x00f0) != 0x00d0) {
+						buffer[posx + posy * SCREEN_WIDTH].Char.UnicodeChar = poscase.Char.UnicodeChar;
 
-			if (posx >= 0 && posx < SCREEN_WIDTH && posy >= 0 && posy < SCREEN_HEIGHT){
-				CHAR_INFO poscase = this->GetCase(x,y);
-				if (poscase.Char.AsciiChar != ' ' || (poscase.Attributes & 0x00f0) != 0x00d0) {
-					buffer[posx + posy * SCREEN_WIDTH].Char.UnicodeChar = poscase.Char.UnicodeChar;
-
-					if ((poscase.Attributes & 0x00f0) != 0x00d0) buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes;
-					else
-					{
-						int bg = (buffer[posx + posy * SCREEN_WIDTH].Attributes & 0x00f0);
-						int color = (poscase.Attributes & 0x000f);
-						int bgcolor = bg | color;
-						buffer[posx + posy * SCREEN_WIDTH].Attributes = bgcolor ;	
+						if ((poscase.Attributes & 0x00f0) != 0x00d0) buffer[posx + posy * SCREEN_WIDTH].Attributes = poscase.Attributes;
+						else
+						{
+							int bg = (buffer[posx + posy * SCREEN_WIDTH].Attributes & 0x00f0);
+							int color = (poscase.Attributes & 0x000f);
+							int bgcolor = bg | color;
+							buffer[posx + posy * SCREEN_WIDTH].Attributes = bgcolor ;	
+						}
 					}
 				}
 			}

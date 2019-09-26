@@ -15,6 +15,7 @@ private:
 	bool jumping;
 	bool assshot;
 	float assshotScore;
+	bool asshotinputpress;
 	
 	void UpdateAssShot();
 
@@ -24,7 +25,6 @@ public :
 	void Move(bool direction = true);
 	bool Jump();
 	void AssShot();
-	float CharToBreakIndicator(char c);
-	char BreakIndicatorToChar(float i);
+
 };
 
