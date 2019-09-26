@@ -9,15 +9,17 @@ Map::Map(std::string file, int x, int y, int width, int height) : Physic2D(file,
 	this->size = this->sprite.GetSize();
 }
 Box Map::Collider(Vector2f pos, Vector2 size) {
-	for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
-		for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
+	if(!sprite.clipped){
+		for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
+			for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
-			if (x >= this->pos.x &&
-				x < this->pos.x + this->size.x &&
-				y >= this->pos.y &&
-				y < this->pos.y + this->size.y) {
-				if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0) {
-					return Box(x, y, 1, 1);
+				if (x >= this->pos.x &&
+					x < this->pos.x + this->size.x &&
+					y >= this->pos.y &&
+					y < this->pos.y + this->size.y) {
+					if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0) {
+						return Box(x, y, 1, 1);
+					}
 				}
 			}
 		}
@@ -26,18 +28,19 @@ Box Map::Collider(Vector2f pos, Vector2 size) {
 }
 std::list<CHAR_INFO*> Map::CollideCase(Vector2f pos, Vector2 size) {
 	std::list<CHAR_INFO*> collideCase;
+	if (!sprite.clipped) {
+		for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
+			for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
 
-	for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
-		for (int y = floor(pos.y); y < ceil(pos.y) + size.y; ++y) {
-
-			if (x >= this->pos.x &&
-				x < this->pos.x + this->size.x &&
-				y >= this->pos.y &&
-				y < this->pos.y + this->size.y) {
-				if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0 || (this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Char.UnicodeChar != ' ')) {
-					collideCase.push_back(this->sprite.Case(x - this->pos.x, y - this->pos.y));
-					if((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0 )
-						casesSave.push_back(CaseSave(x-this->pos.x, y-this->pos.y, this->sprite.Case(x - this->pos.x, y - this->pos.y)->Char.UnicodeChar));
+				if (x >= this->pos.x &&
+					x < this->pos.x + this->size.x &&
+					y >= this->pos.y &&
+					y < this->pos.y + this->size.y) {
+					if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0 || (this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Char.UnicodeChar != ' ')) {
+						collideCase.push_back(this->sprite.Case(x - this->pos.x, y - this->pos.y));
+						if ((this->sprite.GetCase(x - this->pos.x, y - this->pos.y).Attributes & 0x00f0) == 0)
+							casesSave.push_back(CaseSave(x - this->pos.x, y - this->pos.y, this->sprite.Case(x - this->pos.x, y - this->pos.y)->Char.UnicodeChar));
+					}
 				}
 			}
 		}

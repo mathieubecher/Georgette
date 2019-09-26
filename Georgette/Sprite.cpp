@@ -5,6 +5,7 @@
 
 Sprite::Sprite()
 {
+	this->clipped = false;
 	this->pos.x = 0;
 	this->pos.y = 0;
 	this->size.x = 1;
@@ -16,12 +17,14 @@ Sprite::Sprite()
 }
 
 Sprite::Sprite(std::string file) {
+	this->clipped = false;
 	this->pos.x = 0;
 	this->pos.y = 0;
 	this->sprite = SpriteGenerator::CreateSprite(file,&this->size,&this->pos);
 }
 
 Sprite::Sprite(CHAR_INFO *sprite, Vector2 size) {
+	this->clipped = false;
 	this->sprite = sprite;
 	this->size = size;
 	this->pos = Vector2(0,0);
@@ -64,6 +67,7 @@ void Sprite::Draw(Vector2 pos) {
 		pos.x + this->pos.x + size.x > g->Pos().x &&
 		pos.y + this->pos.y < g->Pos().y + SCREEN_HEIGHT &&
 		size.y + pos.y + this->pos.y > g->Pos().y){
+		clipped = false;
 		for (int x = 0; x < this->size.x; ++x) {
 			for (int y = 0; y < this->size.y; ++y) {
 
@@ -89,6 +93,7 @@ void Sprite::Draw(Vector2 pos) {
 			}
 		}
 	}
+	else clipped = true;
 }
 CHAR_INFO Sprite::GetCase(int x, int y) {
 	return this->sprite[x + y * this->size.x];

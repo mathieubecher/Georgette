@@ -8,6 +8,8 @@
 #include "MapGenerator.h"
 #include <stdlib.h>
 #include <time.h>
+#include <cstdbool>
+#include <sstream>
 
 CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
@@ -40,6 +42,7 @@ void Game::Run() {
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
 			Update();
 			Draw();
+			
 			time.getElapsedMs(true);
 		}
 	}
@@ -53,7 +56,7 @@ Game::~Game()
 
 void Game::Update() {
 
-	for (auto object : objects) object->Update();
+	for (auto object : objects) if(!object->GetSprite()->clipped)object->Update();
 	MapGenerator::Update();
 }
 
@@ -68,6 +71,13 @@ void Game::Draw() {
 	SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
 
 	// Draw buffer
+	std::ostringstream strs;
+	strs << (int)floor(1000 / time.getElapsedMs());
+	std::string str = strs.str();
+	int i = -1;
+	for (char c : str) {
+		buffer[0][++i].Char.UnicodeChar = c;
+	}
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
 	// Clear buffer

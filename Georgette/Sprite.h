@@ -13,6 +13,7 @@ private:
 	Vector2 pos;
 	CHAR_INFO * sprite;
 public:
+	bool clipped;
 	void TestSpriteSize(Vector2 const &sizehitbox);
 	Sprite();
 	Sprite(std::string file);

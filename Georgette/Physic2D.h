@@ -8,6 +8,7 @@ protected:
 	Vector2f pos;
 	Vector2 size;
 	static int ID;
+
 public:
 	const int id;
 	Physic2D();
