@@ -83,7 +83,7 @@ void Devil::UpdateAssShot(){
 	}
 	if (indicator > 0) {
 		assshotScore -= indicator;
-		Game::Get()->ScreenShake(100, 1);
+		Game::Get()->ScreenShake(100, (assshotScore < 0)?2: 1);
 	}
 	float destruct = 0;
 	if (assshotScore >= 0) destruct = 1;
@@ -111,7 +111,7 @@ void Devil::UpdateAssShot(){
 	}
 	if (assshotScore <= 0) {
 		assshot = false;
-		Game::Get()->ScreenShake(100, 2);
+		//Game::Get()->ScreenShake(100, 2);
 		if(nbdestroy < cases.size()) this->pos.y = floor(this->pos.y - velocity);
 		else this->pos.y = floor(this->pos.y);
 		velocity = 0;

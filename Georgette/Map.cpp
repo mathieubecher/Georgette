@@ -59,10 +59,10 @@ void Map::ActionCase(CaseSave c) {
 	float value = ((sprite.GetCase(c.x, c.y).Char.UnicodeChar == ' ') ? 1: CharToBreakIndicator(sprite.GetCase(c.x, c.y).Char.UnicodeChar)) -CharToBreakIndicator(c.c);
 	float neigbourgforce = value / 2;
 	if (neigbourgforce > 0.2f) {
-		if ((sprite.GetCase(c.x + 1, c.y).Attributes & 0x00f0) == 0) AddForce(*sprite.Case(c.x + 1, c.y), neigbourgforce);
-		if ((sprite.GetCase(c.x - 1, c.y).Attributes & 0x00f0) == 0)AddForce(*sprite.Case(c.x - 1, c.y), neigbourgforce);
-		if ((sprite.GetCase(c.x, c.y+1).Attributes & 0x00f0) == 0) AddForce(*sprite.Case(c.x, c.y + 1), neigbourgforce);
-		if ((sprite.GetCase(c.x, c.y-1).Attributes & 0x00f0) == 0) AddForce(*sprite.Case(c.x, c.y - 1), neigbourgforce);
+		if ((c.x + 1 >= 0 && c.x + 1 < size.x) && (sprite.GetCase(c.x + 1, c.y).Attributes & 0x00f0) == 0) AddForce(*sprite.Case(c.x + 1, c.y), neigbourgforce);
+		if ((c.x - 1 >= 0 && c.x - 1 < size.x) && (sprite.GetCase(c.x - 1, c.y).Attributes & 0x00f0) == 0)AddForce(*sprite.Case(c.x - 1, c.y), neigbourgforce);
+		if ((c.y + 1 >= 0 && c.y + 1 < size.y) && (sprite.GetCase(c.x, c.y +1).Attributes & 0x00f0) == 0) AddForce(*sprite.Case(c.x, c.y + 1), neigbourgforce);
+		if ((c.y - 1 >= 0 && c.y - 1 < size.y) && (sprite.GetCase(c.x, c.y-1).Attributes & 0x00f0) == 0) AddForce(*sprite.Case(c.x, c.y - 1), neigbourgforce);
 	}
 }
 void Map::AddForce(CHAR_INFO & c, float force) {
