@@ -96,6 +96,10 @@ void Sprite::Draw(Vector2 pos) {
 	else clipped = true;
 }
 CHAR_INFO Sprite::GetCase(int x, int y) {
+	if (x < 0 || x >= size.x || y < 0 || y >= size.y) {
+		x = 0;
+		y = 0;
+	}
 	return this->sprite[x + y * this->size.x];
 }
 CHAR_INFO *Sprite::Case(int x, int y) {

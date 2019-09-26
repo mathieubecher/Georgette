@@ -134,6 +134,7 @@ void Game::Wait(float wait) {
 }
 void Game::ScreenShake(float time, int force) {
 	screenshake = time;
-	posChange.x = (rand() % 10 > 5) ? -force : force;
-	posChange.y = (rand() % 10 > 5) ? -force : force;
+	if(posChange.x == 0) posChange.x = (rand() % 10 > 5) ? -force : force;
+	else posChange.x = -posChange.x;
+	if (posChange.x == 0)posChange.y = (rand() % 10 > 5) ? -force : force;
 }
