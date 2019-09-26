@@ -31,7 +31,7 @@ Game * Game::Get() {
 	return &game;
 }
 
-Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0), georgette(0,0)
+Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0), georgette(0,0), background("../resources/sprites/tile/background.spr")
 {
 	time.getElapsedMs(true);
 }
@@ -107,8 +107,8 @@ void Game::Draw() {
 	bool test = false;
 	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
-			buffer[Y][X].Char.AsciiChar = ' ';
-			buffer[Y][X].Attributes = 0x00f0;
+			buffer[Y][X] = background.GetCase(X,Y);
+
 		}
 	}
 }

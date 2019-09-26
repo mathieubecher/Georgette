@@ -27,7 +27,7 @@ private:
 	
 	Vector2 pos;
 	Vector2 posChange;
-
+	Sprite background;
 	
 	std::list<Physic2D*> objects;
 	std::list<Map*> chunks;

@@ -98,10 +98,10 @@ void Devil::UpdateAssShot(){
 
 	int nbdestroy = 0;
 	for (auto breakcase : cases) {
-		if ((breakcase->Attributes & 0x00f0) == 0x00f0)
+		if ((breakcase->Attributes & 0x00f0) == 0x00d0)
 		{
 			breakcase->Char.UnicodeChar = ' ';
-			breakcase->Attributes = 0x00f0;
+			breakcase->Attributes = 0x00d0;
 			++nbdestroy;
 		}
 		else {
@@ -109,7 +109,7 @@ void Devil::UpdateAssShot(){
 			if (actualValue + destruct < 1)
 				breakcase->Char.UnicodeChar = Map::BreakIndicatorToChar(actualValue + destruct);
 			else {
-				breakcase->Attributes = 0x00f0;
+				breakcase->Attributes = 0x00d0;
 				breakcase->Char.UnicodeChar = ' ';
 				++nbdestroy;
 			}
