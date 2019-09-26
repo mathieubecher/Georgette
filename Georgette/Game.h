@@ -12,7 +12,7 @@
 #include "Map.h"
 
 
-#define MAXFRAME 60.0f
+#define MAXFRAME 60
 #define SCREEN_WIDTH 120
 #define SCREEN_HEIGHT 30
 
