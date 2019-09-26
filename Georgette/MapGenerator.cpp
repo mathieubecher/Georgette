@@ -15,6 +15,50 @@ MapGenerator::~MapGenerator()
 {
 }
 
+
+CHAR_INFO *MapGenerator::GenerateStalactite(Vector2 &size) {
+	size_t n = 4 * 8;
+	size = Vector2(8, 4);
+	CHAR_INFO *res = new CHAR_INFO[n];
+	for (size_t i = 0; i < n; ++i) {
+		res[i].Char.UnicodeChar = ' ';
+		res[i].Attributes = 0x00d0;
+	}
+	size_t randValue;
+	bool descend = true;
+	size_t level = 0;
+	for (size_t i = 0; i < 8; ++i) {
+		for (size_t j = 0; j < level+1 && j < 4; ++j) {
+			if (rand() % 3 == 0) {
+				if (descend) {
+					++level;
+					if (level > 3) {
+						descend = false;
+					}
+				}
+				else {
+					--level;
+				}
+			}
+			res[i+8*j].Attributes = 0x000f;
+			randValue = std::rand() % 300;
+			if (randValue > 10) {
+				res[i + 8 * j].Char.UnicodeChar = ' ';
+			}
+			else if (randValue > 5) {
+				res[i + 8 * j].Char.UnicodeChar = '.';
+			}
+			else if (randValue > 0) {
+				res[i + 8 * j].Char.UnicodeChar = 'o';
+			}
+			else {
+				res[i + 8 * j].Char.UnicodeChar = 'O';
+			}
+		}
+	}
+	return res;
+}
+
 CHAR_INFO *MapGenerator::GenerateDirtBlock(Vector2 &size) {
 	size_t n = 4 * 8;
 	size = Vector2(8,4);
@@ -101,10 +145,15 @@ void MapGenerator::GrassGenerator(CHAR_INFO *fullSprite) {
 	}
 }
 
-void MapGenerator::PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y) {
+void MapGenerator::PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y, bool stalactite) {
 	CHAR_INFO *res;
 	Vector2 size;
-	res = GenerateDirtBlock(size);
+	if (!stalactite) {
+		res = GenerateDirtBlock(size);
+	}
+	else {
+		res = GenerateStalactite(size);
+	}
 	for (size_t i = 0; i < size.x; ++i) {
 		for (size_t j = 0; j < size.y; ++j) {
 			if ((i+x < SIZEW) && (j+y < SIZEH)) {
@@ -113,11 +162,12 @@ void MapGenerator::PutSprite(CHAR_INFO *fullSprite, size_t x, size_t y) {
 			}
 		}
 	}
+
 	delete [] res;
 }
 
 int MapGenerator::GetRandomFloorLevel() {
-	int res = SIZEH - rand() % (SIZEH * 2 / 3);
+	int res = 4 + (rand() % (SIZEH*2/3));
 	return res - (res % 4);
 }
 
@@ -180,13 +230,13 @@ GenFormat MapGenerator::GenerateFormat(Map *left, Map *right, Map *top, Map *bot
 		res.top = top->format.bottom;
 	}
 	else {
-		res.top = rand() % 2 == 0;
+		res.top = rand() % 5 == 0;
 	}
 	if (bottom) {
 		res.bottom = bottom->format.top;
 	}
 	else {
-		res.bottom = rand() % 2 == 0;
+		res.bottom = rand() % 5 == 0;
 	}
 	return res;
 }
@@ -231,12 +281,19 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 				floorLevel += sign * 4;
 			}
 		}
-		for (size_t j = SIZEH - floorLevel; j < SIZEH; j+=4) {
-			PutSprite(sprite, i * 8, j);
+		if (!format.bottom || i < 4 || i > 6) {
+			for (size_t j = SIZEH - floorLevel; j < SIZEH; j += 4) {
+					PutSprite(sprite, i * 8, j);
+			}
 		}
 	}
 	for (size_t i = 0; i < 7; ++i) {
 		Erosion(sprite);
+	}
+	for (size_t i = 0; i < 10; ++i) {
+		if (rand() % 3 == 0 && (i!=0 || format.left!=-1) && (i != 9 || format.right!=-1) && ((i > 6)||(i<4) || !format.top)) {
+			PutSprite(sprite, i*8, 0, true);
+		}
 	}
 	GrassGenerator(sprite);
 	Map *res = new Map(sprite, pos.x, pos.y);
