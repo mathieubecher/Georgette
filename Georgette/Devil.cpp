@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Devil.h"
 #include "Game.h"
-
  
 Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false)
 {
@@ -49,6 +48,8 @@ void Devil::AssShot() {
 	if(!asshotinputpress){
 		asshotinputpress = true;
 		if (!onfloor && !assshot) {
+
+			Wait(200);
 			assshotScore = 0.5f;
 			this->pos.x = floor(this->pos.x);
 			this->pos.y = floor(this->pos.y);
@@ -64,7 +65,7 @@ void Devil::UpdateAssShot(){
 	velocity = 1;
 	assshotScore += (assshotScore > 5)?1.42f: 0.5f;
 	pos.y += velocity;
-
+	
 	std::list<CHAR_INFO*> cases;
 	// Destruct case
 	for (auto chunk : Game::GetChunks()) {
@@ -82,6 +83,7 @@ void Devil::UpdateAssShot(){
 	}
 	if (indicator > 0) {
 		assshotScore -= indicator;
+		Game::Get()->ScreenShake(100, 1);
 	}
 	float destruct = 0;
 	if (assshotScore >= 0) destruct = 1;
@@ -109,10 +111,13 @@ void Devil::UpdateAssShot(){
 	}
 	if (assshotScore <= 0) {
 		assshot = false;
-
-		//this->pos.y -= velocity;
+		Game::Get()->ScreenShake(100, 2);
+		if(nbdestroy < cases.size()) this->pos.y = floor(this->pos.y - velocity);
+		else this->pos.y = floor(this->pos.y);
 		velocity = 0;
-		Rigidbody::Update();
+		
+		Game::Get()->Wait(50);
+		//Rigidbody::Update();
 		onfloor = true;
 	}
 	

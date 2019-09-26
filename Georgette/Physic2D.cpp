@@ -24,7 +24,6 @@ Physic2D::Physic2D(CHAR_INFO *sprite, Vector2 size, Vector2f pos) : id(ID++), sp
 
 
 void Physic2D::Update() {
-
 }
 
 Box Physic2D::Collider(Vector2f pos, Vector2 size) {
@@ -47,4 +46,7 @@ Physic2D::~Physic2D()
 
 Sprite *Physic2D::GetSprite() {
 	return &sprite;
+}
+void Physic2D::Wait(float wait) {
+	this->wait = wait;
 }

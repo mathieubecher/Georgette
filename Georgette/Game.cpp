@@ -15,7 +15,7 @@ CHAR_INFO * Game::Buffer() {
 	return *this->buffer;
 }
 Vector2 Game::Pos() {
-	return this->pos;
+	return Vector2(this->pos.x + this->posChange.x,this->pos.y + this->posChange.y);
 } 
 void Game::SetPos(int x, int y) {
 	pos.x = x;
@@ -39,12 +39,17 @@ void Game::Run() {
 
 
 	while (1) {
+		
+
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
-			Update();
+
+			if (time.getElapsedMs() >= wait) Update();
+			else wait -= time.getElapsedMs();
 			Draw();
 			
 			time.getElapsedMs(true);
 		}
+		
 	}
 }
 Game::~Game()
@@ -56,15 +61,26 @@ Game::~Game()
 
 void Game::Update() {
 
-	for (auto object : objects) if(!object->GetSprite()->clipped)object->Update();
+	for (auto object : objects) {
+		if (!object->GetSprite()->clipped) {
+			if(object->wait <= 0) object->Update();
+			else object->wait -= time.getElapsedMs();
+			if (screenshake < 0) {
+				posChange.x = 0;
+				posChange.y = 0;
+			}
+			else screenshake -= time.getElapsedMs();
+		}
+	}
+
 	MapGenerator::Update();
 }
 
 void Game::Draw() {
-
+	
 	for (auto chunk : chunks) chunk->Draw();
 	for (auto collidable : collidables) collidable->Draw();
-
+	
 
 	COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
 	COORD dwBufferCoord = { 0, 0 };
@@ -99,7 +115,6 @@ std::list<Collidable*> Game::GetCollidables() {
 std::list<Physic2D*> Game::GetObjects() {
 	return Get()->objects;
 }
-
 void Game::AddObject(Physic2D * p) {
 	this->objects.push_back(p);
 }
@@ -110,6 +125,16 @@ void Game::AddCollidable(Collidable * c) {
 	this->collidables.push_back(c);
 }
 
+
 float Game::DistanceToCam(Vector2f pos) {
 	return sqrt(pow(pos.x - this->pos.x, 2) + pow(pos.y - this->pos.y, 2));
+}
+
+void Game::Wait(float wait) {
+	this->wait = wait;
+}
+void Game::ScreenShake(float time, int force) {
+	screenshake = time;
+	posChange.x = (rand() % 10 > 5) ? -force : force;
+	posChange.y = (rand() % 10 > 5) ? -force : force;
 }
