@@ -3,7 +3,8 @@
 class MapGenerator
 {
 public:
-	static Vector2 const SIZE;
+	static CHAR_INFO *castle;
+	static Vector2 sizes[5];
 	MapGenerator();
 	~MapGenerator();
 	static Map *GenerateChunk(Vector2 pos);
@@ -19,4 +20,6 @@ public:
 	static void GrassGenerator(CHAR_INFO *fullSprite);
 	static void Update();
 	static Vector2 GetStartingMapPos(Vector2 pos);
+	static void PutHouse(CHAR_INFO *house, Vector2 size, Vector2 pos, CHAR_INFO *fullSprite, size_t x, size_t y);
+	static void InitHouses();
 };

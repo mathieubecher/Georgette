@@ -2,12 +2,14 @@
 #include "Map.h"
 #include "Game.h"
 #include <math.h>
+
 Map::Map(std::string file, int x, int y, int width, int height) : Physic2D(file,x,y,width,height)
 {
 	Game *g = Game::Get();
 	g->AddChunk(this);
 	this->size = this->sprite.GetSize();
 }
+
 Box Map::Collider(Vector2f pos, Vector2 size) {
 	if(!sprite.clipped){
 		for (int x = floor(pos.x); x < ceil(pos.x) + size.x; ++x) {
@@ -26,6 +28,7 @@ Box Map::Collider(Vector2f pos, Vector2 size) {
 	}
 	return Box();
 }
+
 std::list<CHAR_INFO*> Map::CollideCase(Vector2f pos, Vector2 size) {
 	std::list<CHAR_INFO*> collideCase;
 	if (!sprite.clipped) {
