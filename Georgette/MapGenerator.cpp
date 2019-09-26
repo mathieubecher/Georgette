@@ -324,10 +324,23 @@ Map *MapGenerator::GenerateChunk(Vector2 pos) {
 	}
 	GrassGenerator(sprite);
 	if (!format.bottom) {
-		size_t randValue = 5 + rand() % (SIZEW - 5 - sizes[0].x);
-		for (size_t j = 0; j + sizes[0].y +1 < SIZEH; ++j) {
-			if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j+1)].Attributes == 0x000f) {
-				PutHouse(building, sizes[0], Vector2(pos.x + randValue, pos.y + j+1-sizes[0].y), sprite, randValue, j+1-sizes[0].y);
+		if (rand()%2 == 0) {
+			size_t randValue = 5 + rand() % (SIZEW - 5 - sizes[0].x);
+			for (size_t j = 0; j + sizes[0].y + 1 < SIZEH; ++j) {
+				if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j + 1)].Attributes == 0x000f) {
+					PutHouse(building, sizes[0], Vector2(pos.x + randValue, pos.y + j + 1 - sizes[0].y), sprite, randValue, j + 1 - sizes[0].y);
+				}
+			}
+		}
+		else if(rand()%5 == 0) {
+			size_t randValue = 5 + rand() % 8;
+			for (size_t k = 0; k < 7; ++k) {
+				for (size_t j = 0; j + sizes[0].y + 1 < SIZEH; ++j) {
+					if (sprite[randValue + SIZEW*j].Attributes == 0x00d0 && sprite[randValue + SIZEW*(j + 1)].Attributes == 0x000f) {
+						PutHouse(building, sizes[0], Vector2(pos.x + randValue, pos.y + j + 1 - sizes[0].y), sprite, randValue, j + 1 - sizes[0].y);
+					}
+				}
+				randValue += 4 + (rand() % 5);
 			}
 		}
 	}
@@ -368,7 +381,7 @@ void MapGenerator::InitHouses() {
 	building[0].Char.UnicodeChar = '_';
 	building[1].Attributes = 0x00d0;
 	building[1].Char.UnicodeChar = '_';
-	building[2].Attributes = 0x000f;
+	building[2].Attributes = 0x00d0;
 	building[2].Char.UnicodeChar = '#';
 	for (size_t i = 3; i < 3 * 4; ++i) {
 		building[i].Attributes = 0x000f;
