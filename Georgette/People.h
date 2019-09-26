@@ -12,6 +12,5 @@ public:
 	People(int x, int y);
 	~People();
 	Box Collider(Vector2f pos, Vector2 size);
-	std::list<CHAR_INFO*> CollideCase(Vector2f pos, Vector2 size);
 };
 

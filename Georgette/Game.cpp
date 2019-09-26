@@ -46,7 +46,11 @@ void Game::Run() {
 			if (time.getElapsedMs() >= wait) Update();
 			else wait -= time.getElapsedMs();
 			Draw();
-			
+			if (screenshake < 0) {
+				posChange.x = 0;
+				posChange.y = 0;
+			}
+			else screenshake -= time.getElapsedMs();
 			time.getElapsedMs(true);
 		}
 		
@@ -66,11 +70,7 @@ void Game::Update() {
 			if(object->wait <= 0) object->Update();
 			else object->wait -= time.getElapsedMs();
 
-			if (screenshake < 0) {
-				posChange.x = 0;
-				posChange.y = 0;
-			}
-			else screenshake -= time.getElapsedMs();
+
 		}
 	}
 
