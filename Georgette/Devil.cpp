@@ -59,7 +59,7 @@ void Devil::AssShot() {
 
 void Devil::UpdateAssShot(){
 	velocity = 1;
-	assshotScore += (assshotScore > 5)?1.42f: 0.5f;
+	assshotScore += (assshotScore > 5)?1.2f: 0.5f;
 	pos.y += velocity;
 
 	std::list<CHAR_INFO*> cases;
