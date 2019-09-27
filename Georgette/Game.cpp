@@ -37,7 +37,7 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0),
 }
 void Game::Init() {
 	
-	
+	Map *map = MapGenerator::GenerateFirstChunk();
 	georgette.Init(0, 0);
 	score = 0;
 	chunks.clear();
