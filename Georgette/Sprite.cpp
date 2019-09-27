@@ -54,11 +54,11 @@ Vector2 Sprite::GetSize() {
 
 Sprite::~Sprite()
 {
-	delete [] sprite;
+	//delete [] sprite;
 }
 
 void Sprite::Instantiate() {
-	sprite = new CHAR_INFO[this->size.x*this->size.y];
+	sprite[this->size.x*this->size.y];
 }
 void Sprite::Draw(Vector2 pos) {
 	Game *g = Game::Get();

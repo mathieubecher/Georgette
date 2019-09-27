@@ -13,6 +13,7 @@ bool House::IsHouse() {
 
 House::~House()
 {
+
 }
 void House::Update() {
 	for(auto caseSave : casesSave){

@@ -38,8 +38,8 @@ Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0),
 
 void Game::Run() {
 	Map *map = MapGenerator::GenerateFirstChunk();
-
-	while (1) {
+	bool escape = false;
+	while (!escape) {
 		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
 
 			if (time.getElapsedMs() >= wait) Update();
@@ -51,6 +51,7 @@ void Game::Run() {
 			}
 			else screenshake -= time.getElapsedMs();
 			time.getElapsedMs(true);
+			if (GetAsyncKeyState(VK_ESCAPE))escape = true;
 		}
 	}
 }
@@ -70,13 +71,15 @@ void Game::Update() {
 			if(object->wait <= 0) object->Update();
 			else object->wait -= time.getElapsedMs();
 		}
-		else if(object->deleteObject || abs(object->GetPos().y - this->pos.y)>200 || abs(object->GetPos().x - this->pos.x) > 500) remove.push_front(object);
+		else if(object->deleteObject || abs(object->GetPos().y - this->pos.y)>100 || abs(object->GetPos().x - this->pos.x) > 250) remove.push_front(object);
 	}
 	while (remove.size() > 0) {
 		objects.remove(remove.front());
 		chunks.remove((Map*)remove.front());
 		collidables.remove((Collidable*)remove.front());
+		delete remove.front();
 		remove.pop_front();
+
 	}
 	if (georgette.wait <= 0) georgette.Update();
 	else georgette.wait -= time.getElapsedMs();
