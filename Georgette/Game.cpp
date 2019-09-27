@@ -31,27 +31,53 @@ Game * Game::Get() {
 	return &game;
 }
 
-Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0), georgette(0,0), background("../resources/sprites/tile/background.spr")
+Game::Game() : hOutput((HANDLE)GetStdHandle(STD_OUTPUT_HANDLE)), i(0), pos(0,0), georgette(0,0), background("../resources/sprites/tile/background.spr"), title("../resources/sprites/tile/title.spr")
 {
 	time.getElapsedMs(true);
 }
+void Game::Init() {
+	
+	
+	georgette.Init(0, 0);
+	score = 0;
+	chunks.clear();
+	while (objects.size() > 0) {
+		chunks.remove((Map*)objects.front());
+		collidables.remove((Collidable*)objects.front());
+		delete objects.front();
+		objects.remove(objects.front());
+	}
+	chunks.clear();
+	collidables.clear();
+	objects.clear();
+}
 
 void Game::Run() {
-	Map *map = MapGenerator::GenerateFirstChunk();
-	bool escape = false;
-	while (!escape) {
-		if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
+	//MapGenerator::GenerateFirstChunk();
+	bool exit = false;
+	while(!exit){
+		bool init = false;
+		DrawMenu();
+		if (GetAsyncKeyState(VK_RETURN))init = true;
+		if(init){
+			Init();
+			bool escape = false;
+			while (!escape) {
+				if (time.getElapsedMs() > 1000.0f / MAXFRAME) {
 
-			if (time.getElapsedMs() >= wait) Update();
-			else wait -= time.getElapsedMs();
-			Draw();
-			if (screenshake < 0) {
-				posChange.x = 0;
-				posChange.y = 0;
+					if (time.getElapsedMs() >= wait) Update();
+					else wait -= time.getElapsedMs();
+					Draw();
+					if (screenshake < 0) {
+						posChange.x = 0;
+						posChange.y = 0;
+					}
+					else screenshake -= time.getElapsedMs();
+					time.getElapsedMs(true);
+					if (GetAsyncKeyState(VK_ESCAPE))escape = true;
+				}
 			}
-			else screenshake -= time.getElapsedMs();
-			time.getElapsedMs(true);
-			if (GetAsyncKeyState(VK_ESCAPE))escape = true;
+			
 		}
 	}
 }
@@ -79,7 +105,6 @@ void Game::Update() {
 		collidables.remove((Collidable*)remove.front());
 		delete remove.front();
 		remove.pop_front();
-
 	}
 	if (georgette.wait <= 0) georgette.Update();
 	else georgette.wait -= time.getElapsedMs();
@@ -97,14 +122,15 @@ void Game::Draw() {
 	SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
 
 	// Draw buffer
-	std::ostringstream strs;
-	strs << (int)floor(1000 / time.getElapsedMs());
-	std::string str = strs.str();
-	int i = -1;
-	for (char c : str) {
-		buffer[0][++i].Char.UnicodeChar = c;
+	if(time.getElapsedMs() > 0){
+		std::ostringstream strs;
+		strs << (int)floor(1000 / time.getElapsedMs());
+		std::string str = strs.str();
+		int i = -1;
+		for (char c : str) {
+			buffer[0][++i].Char.UnicodeChar = c;
+		}
 	}
-
 	for (int bar = 0; bar < SCREEN_WIDTH - 4; ++bar) {
 		if(score/(float)MAXSCORE > bar/ (float)(SCREEN_WIDTH - 4)){
 			buffer[SCREEN_HEIGHT-2][bar + 2].Char.UnicodeChar = ' ';
@@ -126,6 +152,38 @@ void Game::Draw() {
 	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
 			buffer[Y][X] = background.GetCase(X,Y);
+
+		}
+	}
+}
+void Game::ShowText(int y, std::string text, int color) {
+	for (int x = 0; x < text.size(); ++x) {
+		buffer[y][x + SCREEN_WIDTH / 2 - text.size() / 2].Char.UnicodeChar = text[x];
+		buffer[y][x + SCREEN_WIDTH / 2 - text.size() / 2].Attributes = color;
+	}
+}
+
+void Game::DrawMenu() {
+
+	ShowText(15,"Press [Enter] to begin",0x00f0);
+	ShowText(17, "CONTROL IN GAME", 0x00f4);
+	ShowText(18, "Move with [Q & D]", 0x00f0);
+	ShowText(19, "Jump with [Space or Z]", 0x00f0);
+	ShowText(20, "Ass Shot in air with [S]", 0x00f0);
+	ShowText(21, "Exit game with [Escape]", 0x00f0);
+
+	
+
+	COORD dwBufferSize = { SCREEN_WIDTH,SCREEN_HEIGHT };
+	COORD dwBufferCoord = { 0, 0 };
+	SMALL_RECT rcRegion = { 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1 };
+	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
+
+	// Clear buffer
+	bool test = false;
+	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
+		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y) {
+			buffer[Y][X] = title.GetCase(X, Y);
 
 		}
 	}

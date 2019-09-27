@@ -29,6 +29,7 @@ private:
 	Vector2 pos;
 	Vector2 posChange;
 	Sprite background;
+	Sprite title;
 	
 	std::list<Physic2D*> objects;
 	std::list<Map*> chunks;
@@ -36,7 +37,9 @@ private:
 	
 	void Update();
 	void Draw();
-
+	void DrawMenu();
+	void ShowText(int y, std::string text, int color);
+	void Init();
 	Game();
 	~Game();
 

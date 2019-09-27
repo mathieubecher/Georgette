@@ -54,7 +54,12 @@ Vector2 Sprite::GetSize() {
 
 Sprite::~Sprite()
 {
-	//delete [] sprite;
+	try{
+		delete [] sprite;
+	}
+	catch (int err) {
+
+	}
 }
 
 void Sprite::Instantiate() {

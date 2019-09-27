@@ -71,5 +71,4 @@ public:
 	static float CharToBreakIndicator(char c);
 	static char BreakIndicatorToChar(float i);
 	virtual bool IsHouse();
-	void DeleteObj();
 };

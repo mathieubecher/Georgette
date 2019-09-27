@@ -2,9 +2,9 @@
 #include "Devil.h"
 #include "Game.h"
  
-Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3,false),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false), iddle_left("../resources/sprites/georgette/georgette_idle_left.spr"), iddle_right(sprite)
-{
-}
+Devil::Devil(int x, int y) : Rigidbody("georgette/georgette_idle.spr", x, y, 5, 3,false),coyote(0.0f), assshot(false), assshotScore(0), jumping(false), asshotinputpress(false), 
+iddle_left("../resources/sprites/georgette/georgette_idle_left.spr"), iddle_right(sprite)
+{}
 
 void Devil::Update() {
 	if (assshot){
@@ -38,6 +38,11 @@ void Devil::Update() {
 	Game::Get()->SetPos(x,y);
 }
 
+void Devil::Init(int x, int y) {
+	this->pos.x = x;
+	this->pos.y = y;
+	Game::Get()->SetPos(x - SCREEN_WIDTH, y - SCREEN_HEIGHT);
+}
 
 void Devil::Move(bool direction) {
 	pos.x += ((direction)?SPEED:-SPEED) * Game::Get()->time.getElapsedMs()*MAXFRAME/1000.0f;

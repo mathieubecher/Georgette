@@ -28,6 +28,6 @@ public :
 	void Move(bool direction = true);
 	bool Jump();
 	void AssShot();
-
+	void Init(int x, int y);
 };
 
