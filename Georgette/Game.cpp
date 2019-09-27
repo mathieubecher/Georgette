@@ -105,17 +105,18 @@ void Game::Draw() {
 		buffer[0][++i].Char.UnicodeChar = c;
 	}
 
-	for (int bar = 0; bar < SCREEN_WIDTH - 2; ++bar) {
-		if(score/(float)MAXSCORE > bar/ (float)(SCREEN_WIDTH - 2)){
-		buffer[SCREEN_HEIGHT-2][bar + 1].Char.UnicodeChar = ' ';
-		buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes = 0x844f;
+	for (int bar = 0; bar < SCREEN_WIDTH - 4; ++bar) {
+		if(score/(float)MAXSCORE > bar/ (float)(SCREEN_WIDTH - 4)){
+			buffer[SCREEN_HEIGHT-2][bar + 2].Char.UnicodeChar = ' ';
+			buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes = 0x844f;
 		}
 		else {
-			buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes = buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes | 0x8400;
+			buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes = buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes | 0x8400;
+
 		}
 
-		if(bar ==0)buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes = 0x0800 | buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes;
-		else if (bar == SCREEN_WIDTH - 3)buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes = 0x1000 | buffer[SCREEN_HEIGHT - 2][bar + 1].Attributes;
+		if(bar == 0) buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes = 0x0800 | buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes;
+		else if (bar + 1 == SCREEN_WIDTH - 4)buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes = 0x1000 | buffer[SCREEN_HEIGHT - 2][bar + 2].Attributes;
 	}
 
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
