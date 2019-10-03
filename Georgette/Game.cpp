@@ -152,7 +152,6 @@ void Game::Draw() {
 	for (size_t X = 0; X < SCREEN_WIDTH; ++X) {
 		for (size_t Y = 0; Y < SCREEN_HEIGHT; ++Y){
 			buffer[Y][X] = background.GetCase(X,Y);
-
 		}
 	}
 }
@@ -167,9 +166,9 @@ void Game::DrawMenu() {
 
 	ShowText(15,"Press [Enter] to begin",0x00f0);
 	ShowText(17, "CONTROL IN GAME", 0x00f4);
-	ShowText(18, "Move with [Q & D]", 0x00f0);
-	ShowText(19, "Jump with [Space or Z]", 0x00f0);
-	ShowText(20, "Ass Shot in air with [S]", 0x00f0);
+	ShowText(18, "Move with [A & D]", 0x00f0);
+	ShowText(19, "Jump with [Space or W]", 0x00f0);
+	ShowText(20, "Slam in air with [S]", 0x00f0);
 	ShowText(21, "Exit game with [Escape]", 0x00f0);
 
 	

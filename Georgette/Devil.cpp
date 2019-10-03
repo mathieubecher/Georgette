@@ -13,12 +13,12 @@ void Devil::Update() {
 	else {
 		if (onfloor) coyote = 0;
 		else coyote += Game::Get()->time.getElapsedMs();
-		if (GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(0x5A) || GetAsyncKeyState(VK_UP))Jump();
+		if (GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(0x5A) || GetAsyncKeyState(VK_UP) || GetAsyncKeyState(0x57))Jump();
 		else jumping = false;
 
 		Rigidbody::Update();
 
-		if (GetAsyncKeyState(0x51) || GetAsyncKeyState(VK_LEFT))Move(false);
+		if (GetAsyncKeyState(0x51) || GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(0x41))Move(false);
 		else if (GetAsyncKeyState(0x44) || GetAsyncKeyState(VK_RIGHT))Move();
 
 		if (GetAsyncKeyState(0x53) || GetAsyncKeyState(VK_DOWN)) AssShot();
